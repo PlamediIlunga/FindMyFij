@@ -1,0 +1,163 @@
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-5;
+  max-width: 560px;
+}
+
+.row {
+  display: flex;
+  gap: v.$space-3;
+
+  @include m.mobile {
+    flex-direction: column;
+  }
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-2;
+  flex: 1;
+  min-width: 0;
+}
+
+.label {
+  font-size: v.$font-size-sm;
+  font-weight: 600;
+  color: var(--color-text-strong);
+}
+
+.input,
+.select {
+  padding: v.$space-3;
+  border-radius: v.$radius-sm;
+  border: 1px solid var(--color-border-strong);
+  font-size: v.$font-size-base;
+  background: var(--color-input-bg);
+  color: var(--color-text-strong);
+  min-height: 48px;
+  transition: border-color v.$transition-fast, box-shadow v.$transition-fast;
+
+  &:hover {
+    border-color: var(--color-text-muted);
+  }
+
+  &:focus-visible {
+    outline: none;
+    border-color: v.$color-orange-500;
+    box-shadow: 0 0 0 3px rgba(255, 106, 44, 0.15);
+  }
+}
+
+.select {
+  cursor: pointer;
+}
+
+.geocodeRow {
+  display: flex;
+  align-items: center;
+  gap: v.$space-3;
+  padding: v.$space-4;
+  background: var(--color-surface-muted);
+  border-radius: v.$radius-md;
+  border: 1px solid var(--color-border);
+
+  @include m.mobile {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.geocodeButton {
+  @include m.button-reset;
+  padding: v.$space-3 v.$space-4;
+  border-radius: v.$radius-pill;
+  background: v.$color-navy-900;
+  color: v.$color-white;
+  font-weight: 700;
+  font-size: v.$font-size-sm;
+  white-space: nowrap;
+  min-height: 44px;
+  transition: transform v.$transition-fast, background v.$transition-fast;
+
+  &:hover:not(:disabled) {
+    background: v.$color-navy-800;
+  }
+  &:active:not(:disabled) {
+    transform: scale(0.98);
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+}
+
+.geocodeStatus {
+  font-size: v.$font-size-sm;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.geocodeSuccess {
+  color: v.$color-success;
+  font-weight: 600;
+}
+
+.geocodeWarning {
+  color: v.$color-warning;
+  font-weight: 600;
+}
+
+.geocodeError {
+  color: v.$color-danger;
+  font-weight: 600;
+}
+
+.submitButton {
+  @include m.button-reset;
+  padding: v.$space-4;
+  border-radius: v.$radius-pill;
+  background: v.$color-orange-500;
+  color: v.$color-white;
+  font-weight: 700;
+  font-size: v.$font-size-base;
+  min-height: 52px;
+  transition: transform v.$transition-fast, background v.$transition-fast;
+
+  &:hover:not(:disabled) {
+    background: v.$color-orange-600;
+  }
+  &:active:not(:disabled) {
+    transform: scale(0.99);
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+}
+
+.submitButtonSuccess {
+  background: v.$color-success;
+  opacity: 1 !important;
+  cursor: default;
+}
+
+.formError {
+  color: v.$color-danger;
+  font-size: v.$font-size-sm;
+  margin: 0;
+  padding: v.$space-3;
+  background: rgba(232, 57, 74, 0.1);
+  border-radius: v.$radius-sm;
+}
+
+.hint {
+  font-size: v.$font-size-xs;
+  color: var(--color-text-muted);
+  margin: 0;
+  line-height: 1.5;
+}

@@ -1,0 +1,35 @@
+@use '../../styles/variables' as v;
+
+.mapWrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  background: v.$color-gray-100;
+}
+
+.loadingState {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: v.$space-3;
+  color: v.$color-gray-600;
+  font-size: v.$font-size-sm;
+}
+
+.spinner {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 3px solid v.$color-gray-200;
+  border-top-color: v.$color-orange-500;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

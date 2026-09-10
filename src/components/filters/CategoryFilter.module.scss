@@ -1,0 +1,151 @@
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
+.section {
+  margin-top: v.$space-5;
+}
+
+.sectionTitle {
+  font-size: v.$font-size-xs;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin: 0 0 v.$space-3;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-2;
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: v.$space-2;
+  padding: v.$space-2 v.$space-3;
+  border-radius: v.$radius-sm;
+  cursor: pointer;
+  transition: background v.$transition-fast;
+  user-select: none;
+
+  &:hover {
+    background: var(--color-hover);
+  }
+}
+
+.optionGlobal {
+  margin-bottom: v.$space-1;
+  padding-bottom: v.$space-2;
+  border-bottom: 1px dashed var(--color-border-strong);
+  border-radius: v.$radius-sm v.$radius-sm 0 0;
+}
+
+.hintBadge {
+  flex-shrink: 0;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  padding: 1px v.$space-2;
+  border-radius: v.$radius-pill;
+}
+
+.checkbox {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 5px;
+  border: 2px solid var(--color-border-strong);
+  flex-shrink: 0;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+
+  &::after {
+    content: '';
+    width: 9px;
+    height: 9px;
+    border-radius: 2px;
+    background: var(--dot-color, #{v.$color-orange-500});
+    transform: scale(0);
+    transition: transform v.$transition-fast;
+  }
+
+  &:checked {
+    border-color: var(--dot-color, #{v.$color-orange-500});
+    &::after {
+      transform: scale(1);
+    }
+  }
+
+  @include m.focus-ring;
+}
+
+.label {
+  font-size: v.$font-size-sm;
+  color: var(--color-text-strong);
+  flex: 1;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+// --- Variante "chips" (barre flottante mobile) ---
+.chipRow {
+  display: flex;
+  gap: v.$space-2;
+  overflow-x: auto;
+  padding: 0 v.$space-1;
+  @include m.hide-scrollbar;
+}
+
+.chip {
+  @include m.button-reset;
+  @include m.floating-surface;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  padding: v.$space-2 v.$space-3;
+  border-radius: v.$radius-pill;
+  font-size: v.$font-size-xs;
+  font-weight: 600;
+  color: var(--color-text-strong);
+  border: 1px solid transparent;
+  transition: transform v.$transition-fast, border-color v.$transition-fast;
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  @include m.focus-ring;
+}
+
+.chipActive {
+  border-color: var(--chip-color, #{v.$color-orange-500});
+  color: var(--chip-color, #{v.$color-orange-500});
+}
+
+.chipDot {
+  font-size: 10px;
+}
+
+.citySelect {
+  width: 100%;
+  padding: v.$space-3;
+  border-radius: v.$radius-sm;
+  border: 1px solid var(--color-border-strong);
+  font-size: v.$font-size-sm;
+  color: var(--color-text-strong);
+  background: var(--color-input-bg);
+  cursor: pointer;
+
+  @include m.focus-ring;
+}

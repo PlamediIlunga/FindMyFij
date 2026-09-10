@@ -1,0 +1,135 @@
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
+.wrapper {
+  position: relative;
+}
+
+.inputRow {
+  display: flex;
+  align-items: center;
+  gap: v.$space-2;
+  border-radius: v.$radius-pill;
+  padding: v.$space-3 v.$space-4;
+  border: 1px solid transparent;
+  transition: border-color v.$transition-fast, box-shadow v.$transition-fast;
+  @include m.floating-surface;
+
+  &:focus-within {
+    border-color: v.$color-orange-500;
+    box-shadow: 0 0 0 3px rgba(255, 106, 44, 0.18);
+  }
+}
+
+.icon {
+  flex-shrink: 0;
+  color: var(--color-text-muted);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  outline: none;
+  font-size: v.$font-size-base;
+  background: transparent;
+  color: var(--color-text-strong);
+
+  &::placeholder {
+    color: var(--color-text-muted);
+  }
+}
+
+.clearButton {
+  @include m.button-reset;
+  color: var(--color-text-muted);
+  display: flex;
+  padding: v.$space-1;
+
+  &:hover {
+    color: var(--color-text-strong);
+  }
+}
+
+.results {
+  position: absolute;
+  top: calc(100% + v.$space-2);
+  left: 0;
+  right: 0;
+  background: var(--color-surface);
+  border-radius: v.$radius-md;
+  box-shadow: var(--shadow-float);
+  border: 1px solid var(--color-border);
+  max-height: 320px;
+  overflow-y: auto;
+  z-index: v.$z-controls;
+  @include m.scrollbar-thin;
+}
+
+.resultItem {
+  @include m.button-reset;
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: v.$space-3;
+  padding: v.$space-3 v.$space-4;
+  text-align: left;
+  border-bottom: 1px solid var(--color-border);
+
+  &:hover,
+  &:focus-visible {
+    background: var(--color-hover);
+  }
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.resultDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.resultText {
+  min-width: 0;
+}
+
+.resultName {
+  font-weight: 600;
+  font-size: v.$font-size-sm;
+  color: var(--color-text-strong);
+  @include m.truncate;
+}
+
+.resultMeta {
+  font-size: v.$font-size-xs;
+  color: var(--color-text-muted);
+  @include m.truncate;
+}
+
+.geocodeItem {
+  @include m.button-reset;
+  display: flex;
+  align-items: center;
+  gap: v.$space-2;
+  width: 100%;
+  padding: v.$space-3 v.$space-4;
+  text-align: left;
+  color: v.$color-orange-600;
+  font-weight: 600;
+  font-size: v.$font-size-sm;
+  border-top: 1px solid var(--color-border);
+
+  &:hover {
+    background: var(--color-selected);
+  }
+}
+
+.emptyState {
+  padding: v.$space-4;
+  font-size: v.$font-size-sm;
+  color: var(--color-text-muted);
+  text-align: center;
+}

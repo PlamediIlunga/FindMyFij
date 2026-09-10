@@ -1,0 +1,75 @@
+@use '../../../../styles/variables' as v;
+@use '../../../../styles/mixins' as m;
+
+// Layout à deux colonnes : le formulaire à gauche, un panneau d'aide
+// sticky à droite. Centré, avec une largeur maximale confortable — plutôt
+// qu'une simple boîte perdue au milieu d'une page trop large.
+.layout {
+  display: grid;
+  grid-template-columns: minmax(0, 620px) 280px;
+  gap: v.$space-6;
+  align-items: start;
+  max-width: 980px;
+  margin: 0 auto;
+
+  @include m.tablet {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @include m.mobile {
+    grid-template-columns: minmax(0, 1fr);
+    gap: v.$space-4;
+  }
+}
+
+.formCard {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: v.$radius-lg;
+  box-shadow: var(--shadow-sm);
+  padding: v.$space-6;
+
+  @include m.mobile {
+    padding: v.$space-4;
+    border-radius: v.$radius-md;
+  }
+}
+
+.tips {
+  position: sticky;
+  top: calc(v.$space-6 + var(--safe-top));
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  border-radius: v.$radius-lg;
+  padding: v.$space-5;
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-3;
+
+  @include m.tablet {
+    position: static;
+  }
+
+  @include m.mobile {
+    padding: v.$space-4;
+    border-radius: v.$radius-md;
+  }
+}
+
+.tipsTitle {
+  margin: 0;
+  font-family: v.$font-display;
+  font-size: v.$font-size-base;
+  color: var(--color-text-strong);
+}
+
+.tipsList {
+  margin: 0;
+  padding-left: v.$space-5;
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-2;
+  font-size: v.$font-size-sm;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}

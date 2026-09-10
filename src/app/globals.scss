@@ -1,0 +1,161 @@
+@use '../styles/variables' as v;
+@use '../styles/mixins' as m;
+@import 'leaflet/dist/leaflet.css';
+@import 'leaflet.markercluster/dist/MarkerCluster.css';
+@import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+
+@font-face {
+  font-family: 'Archivo Black';
+  src: local('Archivo Black');
+  font-display: swap;
+}
+
+:root {
+  --color-bg: #{v.$color-gray-100};
+  --color-surface: #{v.$color-white};
+  --color-surface-muted: #{v.$color-gray-50};
+  --color-border: #{v.$color-gray-200};
+  --color-border-strong: #{v.$color-gray-300};
+  --color-text: #{v.$color-black};
+  --color-text-muted: #{v.$color-gray-600};
+  --color-text-strong: #{v.$color-navy-900};
+  --color-input-bg: #{v.$color-white};
+  --color-hover: #{v.$color-gray-50};
+  --color-selected: #{v.$color-orange-100};
+  --color-header-bg: #{v.$color-white};
+  --color-scrollbar: #{v.$color-gray-300};
+  --color-surface-float: #{v.$color-white};
+  --color-surface-float-glass: rgba(255, 255, 255, 0.82);
+  --color-overlay: rgba(12, 12, 46, 0.55);
+  --shadow-sm: #{v.$shadow-sm};
+  --shadow-md: #{v.$shadow-md};
+  --shadow-lg: #{v.$shadow-lg};
+  --shadow-float: #{v.$shadow-float};
+  --safe-top: #{v.$safe-top};
+  --safe-bottom: #{v.$safe-bottom};
+  --safe-left: #{v.$safe-left};
+  --safe-right: #{v.$safe-right};
+}
+
+[data-theme='dark'] {
+  --color-bg: #{v.$color-dark-bg};
+  --color-surface: #{v.$color-dark-surface};
+  --color-surface-muted: #{v.$color-navy-800};
+  --color-border: #{v.$color-dark-border};
+  --color-border-strong: #{v.$color-navy-700};
+  --color-text: #{v.$color-dark-text};
+  --color-text-muted: #{v.$color-gray-400};
+  --color-text-strong: #{v.$color-dark-text};
+  --color-input-bg: #{v.$color-navy-800};
+  --color-hover: #{v.$color-navy-800};
+  --color-selected: rgba(255, 106, 44, 0.18);
+  --color-header-bg: #{v.$color-navy-900};
+  --color-scrollbar: #{v.$color-navy-700};
+  --color-surface-float: #{v.$color-navy-900};
+  --color-surface-float-glass: rgba(18, 18, 58, 0.78);
+  --color-overlay: rgba(4, 4, 18, 0.7);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 6px 20px rgba(0, 0, 0, 0.35);
+  --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.45);
+  --shadow-float: 0 10px 28px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  height: 100%;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: v.$font-body;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color v.$transition-base, color v.$transition-base;
+}
+
+#__next,
+body,
+html {
+  height: 100%;
+}
+
+a {
+  color: inherit;
+}
+
+button {
+  font-family: inherit;
+}
+
+::selection {
+  background: v.$color-orange-100;
+  color: v.$color-navy-900;
+}
+
+[data-theme='dark'] ::selection {
+  background: rgba(255, 106, 44, 0.35);
+  color: v.$color-dark-text;
+}
+
+/* --- Overrides Leaflet pour coller à l'identité FIJ --- */
+.leaflet-popup-content-wrapper {
+  border-radius: v.$radius-md;
+  box-shadow: var(--shadow-lg);
+  padding: 0;
+  overflow: hidden;
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  width: 300px !important;
+}
+
+.leaflet-popup-tip {
+  box-shadow: var(--shadow-md);
+  background: var(--color-surface);
+}
+
+.leaflet-container {
+  font-family: v.$font-body;
+  background: var(--color-bg);
+}
+
+[data-theme='dark'] .leaflet-tile-pane {
+  filter: brightness(0.75) contrast(1.1) saturate(0.85);
+}
+
+/* Sur mobile, les +/- de zoom prennent de la place et font double emploi
+   avec le pincement tactile : on les masque, comme Google Maps. */
+@media (max-width: 640px) {
+  .leaflet-control-zoom {
+    display: none;
+  }
+  .leaflet-control-attribution {
+    font-size: 9px;
+    padding: 1px 4px;
+    max-width: 55vw;
+    @include m.truncate;
+  }
+}
+
+.marker-cluster-fij {
+  background: rgba(255, 106, 44, 0.25);
+  border-radius: 50%;
+}
+.marker-cluster-fij div {
+  background: v.$color-orange-500;
+  color: v.$color-white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 13px;
+  width: 100%;
+  height: 100%;
+}

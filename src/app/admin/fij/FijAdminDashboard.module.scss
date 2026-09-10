@@ -1,0 +1,374 @@
+@use '../../../styles/variables' as v;
+@use '../../../styles/mixins' as m;
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-6;
+}
+
+// --- Bandeau de statistiques ---
+.statStrip {
+  display: flex;
+  gap: v.$space-3;
+  overflow-x: auto;
+  padding-bottom: v.$space-1;
+  @include m.scrollbar-thin;
+}
+
+.statCard {
+  flex-shrink: 0;
+  min-width: 120px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: v.$radius-md;
+  padding: v.$space-4;
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-1;
+  box-shadow: var(--shadow-sm);
+}
+
+.statValue {
+  font-family: v.$font-display;
+  font-size: v.$font-size-xl;
+  color: var(--color-text-strong);
+  display: flex;
+  align-items: center;
+  gap: v.$space-2;
+}
+
+.statDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.statLabel {
+  font-size: v.$font-size-xs;
+  color: var(--color-text-muted);
+}
+
+// --- Barre de contrôles / filtres ---
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: v.$space-4;
+  padding: v.$space-4;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: v.$radius-md;
+  box-shadow: var(--shadow-sm);
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: v.$space-3;
+  flex: 1;
+
+  @include m.mobile {
+    flex-direction: column;
+  }
+}
+
+.controlGroup {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-1;
+  min-width: 160px;
+
+  @include m.mobile {
+    min-width: 0;
+    width: 100%;
+  }
+}
+
+.controlLabel {
+  font-size: v.$font-size-xs;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.select {
+  padding: v.$space-2 v.$space-3;
+  border-radius: v.$radius-sm;
+  border: 1px solid var(--color-border-strong);
+  background: var(--color-input-bg);
+  color: var(--color-text-strong);
+  font-size: v.$font-size-sm;
+  min-height: 40px;
+  cursor: pointer;
+
+  @include m.focus-ring;
+}
+
+.summary {
+  font-size: v.$font-size-sm;
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+// --- Groupes ---
+.groups {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-5;
+}
+
+.group {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: v.$radius-md;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.groupHeader {
+  padding: v.$space-4;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-surface-muted);
+}
+
+.groupTitle {
+  margin: 0 0 v.$space-2;
+  font-family: v.$font-display;
+  font-size: v.$font-size-base;
+  color: var(--color-text-strong);
+  display: flex;
+  align-items: center;
+  gap: v.$space-2;
+}
+
+.groupCount {
+  font-family: v.$font-body;
+  font-size: v.$font-size-xs;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 1px v.$space-2;
+  border-radius: v.$radius-pill;
+}
+
+.breakdowns {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-1;
+}
+
+.breakdown {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: v.$space-2;
+  font-size: v.$font-size-xs;
+}
+
+.breakdownLabel {
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.breakdownChip {
+  color: var(--color-text-strong);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  padding: 1px v.$space-2;
+  border-radius: v.$radius-pill;
+}
+
+// --- Table (desktop) / cartes empilées (mobile) ---
+// Technique classique de tableau responsive : on garde un vrai <table> pour
+// la sémantique et l'accessibilité, et on le restyle en liste de cartes en
+// dessous du breakpoint mobile via data-label + pseudo-élément.
+.table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    text-align: left;
+    font-size: v.$font-size-xs;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--color-text-muted);
+    padding: v.$space-3 v.$space-4;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  td {
+    padding: v.$space-3 v.$space-4;
+    font-size: v.$font-size-sm;
+    color: var(--color-text-strong);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  tbody tr:hover {
+    background: var(--color-hover);
+  }
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  @include m.mobile {
+    display: block;
+
+    thead {
+      display: none;
+    }
+
+    tbody,
+    tr {
+      display: block;
+      width: 100%;
+    }
+
+    tr {
+      padding: v.$space-3 v.$space-4;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    td {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: v.$space-3;
+      padding: v.$space-2 0;
+      border-bottom: none;
+      text-align: right;
+
+      &::before {
+        content: attr(data-label);
+        font-size: v.$font-size-xs;
+        font-weight: 700;
+        color: var(--color-text-muted);
+        text-align: left;
+        flex-shrink: 0;
+      }
+
+      &:empty,
+      &[data-label='']::before {
+        content: '';
+      }
+    }
+  }
+}
+
+.categoryTag {
+  display: inline-flex;
+  align-items: center;
+  font-size: v.$font-size-xs;
+  font-weight: 700;
+  color: v.$color-white;
+  padding: 2px v.$space-2;
+  border-radius: v.$radius-pill;
+}
+
+.actionsCell {
+  display: flex;
+  align-items: center;
+  gap: v.$space-2;
+
+  @include m.mobile {
+    justify-content: flex-end;
+  }
+}
+
+.editButton {
+  @include m.button-reset;
+  width: 32px;
+  height: 32px;
+  border-radius: v.$radius-sm;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-border);
+  text-decoration: none;
+  transition: background v.$transition-fast, color v.$transition-fast, transform v.$transition-fast,
+    border-color v.$transition-fast;
+
+  &:hover {
+    background: rgba(255, 106, 44, 0.1);
+    color: v.$color-orange-600;
+    border-color: v.$color-orange-500;
+  }
+  &:active {
+    transform: scale(0.94);
+  }
+
+  @include m.focus-ring;
+}
+
+.deleteButton {
+  @include m.button-reset;
+  width: 32px;
+  height: 32px;
+  border-radius: v.$radius-sm;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: v.$color-danger;
+  background: rgba(232, 57, 74, 0.08);
+  transition: background v.$transition-fast, transform v.$transition-fast;
+
+  &:hover:not(:disabled) {
+    background: rgba(232, 57, 74, 0.16);
+  }
+  &:active:not(:disabled) {
+    transform: scale(0.94);
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+
+  @include m.focus-ring;
+}
+
+.deleteSpinner {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 2px solid rgba(232, 57, 74, 0.3);
+  border-top-color: v.$color-danger;
+  animation: delete-spin 0.7s linear infinite;
+}
+
+@keyframes delete-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.deleteError {
+  font-size: v.$font-size-xs;
+  color: v.$color-danger;
+  margin-top: v.$space-1;
+}
+
+// --- État vide ---
+.emptyState {
+  text-align: center;
+  padding: v.$space-8 v.$space-4;
+  background: var(--color-surface);
+  border: 1px dashed var(--color-border-strong);
+  border-radius: v.$radius-md;
+}
+
+.emptyTitle {
+  font-family: v.$font-display;
+  font-size: v.$font-size-lg;
+  color: var(--color-text-strong);
+  margin: 0 0 v.$space-2;
+}
+
+.emptyText {
+  font-size: v.$font-size-sm;
+  color: var(--color-text-muted);
+  margin: 0;
+}

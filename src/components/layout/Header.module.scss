@@ -1,0 +1,56 @@
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: v.$space-4 v.$space-5;
+  border-bottom: 1px solid var(--color-border-strong);
+  background: var(--color-header-bg);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  z-index: v.$z-sidebar + 1;
+}
+
+.right_header_icons {
+  display: flex;
+  align-items: center;
+  gap: v.$space-2;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: v.$space-3;
+}
+
+.logo {
+  width: 34px;
+  height: 34px;
+  border-radius: v.$radius-sm;
+  background: v.$color-orange-500;
+  color: v.$color-white;
+  font-family: v.$font-display;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: v.$font-size-sm;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+}
+
+.title {
+  font-family: v.$font-display;
+  font-size: v.$font-size-lg;
+  color: var(--color-text-strong);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.subtitle {
+  font-size: v.$font-size-xs;
+  color: var(--color-text-muted);
+  margin: 0;
+}

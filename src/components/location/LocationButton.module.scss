@@ -1,0 +1,71 @@
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
+.button {
+  @include m.button-reset;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: v.$space-2;
+  width: 100%;
+  padding: v.$space-3;
+  border-radius: v.$radius-sm;
+  background: v.$color-navy-900;
+  color: v.$color-white;
+  font-weight: 600;
+  font-size: v.$font-size-sm;
+  margin-top: v.$space-4;
+  transition: background v.$transition-fast, transform v.$transition-fast;
+
+  &:hover:not(:disabled) {
+    background: v.$color-navy-800;
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: progress;
+  }
+
+  @include m.focus-ring;
+}
+
+.error {
+  margin: v.$space-2 0 0;
+  font-size: v.$font-size-xs;
+  color: v.$color-danger;
+  text-align: center;
+}
+
+// --- Variante FAB (pile de contrôles flottants mobile) ---
+.fab {
+  @include m.fab;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2px solid var(--color-border-strong);
+  border-top-color: v.$color-orange-500;
+  animation: fab-spin 0.7s linear infinite;
+}
+
+@keyframes fab-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.fabError {
+  position: absolute;
+  right: calc(100% + v.$space-2);
+  top: 50%;
+  transform: translateY(-50%);
+  white-space: nowrap;
+  background: v.$color-danger;
+  color: v.$color-white;
+  font-size: v.$font-size-xs;
+  padding: v.$space-1 v.$space-2;
+  border-radius: v.$radius-sm;
+}

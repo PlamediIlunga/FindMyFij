@@ -1,0 +1,109 @@
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
+.card {
+  position: relative;
+  padding: v.$space-4;
+  border-radius: v.$radius-lg;
+  background: var(--color-surface-muted);
+  margin-bottom: v.$space-3;
+}
+
+.close {
+  @include m.button-reset;
+  position: absolute;
+  top: v.$space-2;
+  right: v.$space-2;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  background: var(--color-surface);
+
+  &:hover {
+    color: var(--color-text-strong);
+  }
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  gap: v.$space-3;
+  padding-right: v.$space-6;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+
+.info {
+  min-width: 0;
+}
+
+.name {
+  margin: 0;
+  font-family: v.$font-display;
+  font-size: v.$font-size-base;
+  color: var(--color-text-strong);
+  line-height: 1.2;
+}
+
+.meta {
+  margin: v.$space-1 0 0;
+  font-size: v.$font-size-xs;
+  color: var(--color-text-muted);
+}
+
+.actions {
+  display: flex;
+  gap: v.$space-2;
+  margin-top: v.$space-3;
+}
+
+.primary,
+.secondary {
+  @include m.button-reset;
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: v.$space-2;
+  padding: v.$space-2 v.$space-3;
+  border-radius: v.$radius-pill;
+  font-size: v.$font-size-sm;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform v.$transition-fast, opacity v.$transition-fast;
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  @include m.focus-ring;
+}
+
+.primary {
+  background: v.$color-orange-500;
+  color: v.$color-white;
+
+  &:hover {
+    background: v.$color-orange-600;
+  }
+}
+
+.secondary {
+  background: var(--color-surface);
+  color: var(--color-text-strong);
+  border: 1px solid var(--color-border-strong);
+
+  &:hover {
+    background: var(--color-hover);
+  }
+}

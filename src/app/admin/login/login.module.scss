@@ -1,0 +1,226 @@
+@use '../../../styles/variables' as v;
+@use '../../../styles/mixins' as m;
+
+.page {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+
+  @include m.mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+// --- Panneau de marque (gauche desktop / bandeau haut mobile) ---
+.hero {
+  position: relative;
+  background: linear-gradient(160deg, v.$color-navy-950 0%, v.$color-navy-800 100%);
+  color: v.$color-white;
+  padding: v.$space-6 v.$space-8;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -15%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(255, 106, 44, 0.35), transparent 70%);
+    filter: blur(10px);
+  }
+
+  @include m.mobile {
+    padding: v.$space-5 v.$space-4 v.$space-6;
+    min-height: auto;
+  }
+}
+
+.heroLogo {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: v.$space-2;
+  color: v.$color-white;
+  text-decoration: none;
+  font-family: v.$font-display;
+  font-size: v.$font-size-base;
+  width: fit-content;
+}
+
+.logoMark {
+  width: 32px;
+  height: 32px;
+  border-radius: v.$radius-sm;
+  background: v.$color-orange-500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: v.$font-size-xs;
+  flex-shrink: 0;
+}
+
+.heroBody {
+  position: relative;
+  z-index: 1;
+  margin: v.$space-8 0;
+
+  @include m.mobile {
+    margin: v.$space-5 0;
+  }
+}
+
+.heroTitle {
+  font-family: v.$font-display;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  line-height: 1.15;
+  margin: 0 0 v.$space-4;
+  max-width: 420px;
+}
+
+.heroText {
+  font-size: v.$font-size-base;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+  max-width: 400px;
+  margin: 0;
+
+  @include m.mobile {
+    display: none;
+  }
+}
+
+.heroFoot {
+  position: relative;
+  z-index: 1;
+  font-size: v.$font-size-xs;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0;
+
+  @include m.mobile {
+    display: none;
+  }
+}
+
+// --- Panneau formulaire ---
+.formSide {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: v.$space-6;
+  background: var(--color-bg);
+
+  @include m.mobile {
+    padding: v.$space-5 v.$space-4 calc(v.$space-6 + var(--safe-bottom));
+  }
+}
+
+.card {
+  width: 100%;
+  max-width: 380px;
+}
+
+.title {
+  font-family: v.$font-display;
+  font-size: v.$font-size-xl;
+  color: var(--color-text-strong);
+  margin: 0 0 v.$space-1;
+}
+
+.subtitle {
+  font-size: v.$font-size-sm;
+  color: var(--color-text-muted);
+  margin: 0 0 v.$space-5;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-4;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-2;
+}
+
+.label {
+  font-size: v.$font-size-sm;
+  font-weight: 600;
+  color: var(--color-text-strong);
+}
+
+.input {
+  padding: v.$space-3;
+  border-radius: v.$radius-sm;
+  border: 1px solid var(--color-border-strong);
+  font-size: v.$font-size-base;
+  background: var(--color-input-bg);
+  color: var(--color-text-strong);
+  min-height: 48px;
+  transition: border-color v.$transition-fast, box-shadow v.$transition-fast;
+
+  &:focus-visible {
+    outline: none;
+    border-color: v.$color-orange-500;
+    box-shadow: 0 0 0 3px rgba(255, 106, 44, 0.15);
+  }
+}
+
+.submitButton {
+  @include m.button-reset;
+  padding: v.$space-3;
+  border-radius: v.$radius-pill;
+  background: v.$color-orange-500;
+  color: v.$color-white;
+  font-weight: 700;
+  font-size: v.$font-size-base;
+  min-height: 48px;
+  margin-top: v.$space-1;
+  transition: background v.$transition-fast, transform v.$transition-fast;
+
+  &:hover:not(:disabled) {
+    background: v.$color-orange-600;
+  }
+  &:active:not(:disabled) {
+    transform: scale(0.99);
+  }
+  &:disabled {
+    opacity: 0.6;
+    cursor: progress;
+  }
+}
+
+.error {
+  color: v.$color-danger;
+  font-size: v.$font-size-sm;
+  margin: 0;
+  padding: v.$space-3;
+  background: rgba(232, 57, 74, 0.1);
+  border-radius: v.$radius-sm;
+}
+
+.hint {
+  font-size: v.$font-size-xs;
+  color: var(--color-text-muted);
+  margin: v.$space-5 0 0;
+  text-align: center;
+}
+
+.backLink {
+  display: block;
+  text-align: center;
+  font-size: v.$font-size-sm;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  margin-top: v.$space-4;
+
+  &:hover {
+    color: var(--color-text-strong);
+  }
+}

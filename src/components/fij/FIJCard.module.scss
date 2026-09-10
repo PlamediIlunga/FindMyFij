@@ -1,0 +1,56 @@
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
+.card {
+  @include m.button-reset;
+  display: flex;
+  align-items: center;
+  gap: v.$space-3;
+  width: 100%;
+  padding: v.$space-3;
+  border-radius: v.$radius-md;
+  text-align: left;
+  transition: background v.$transition-fast, border-color v.$transition-fast;
+  border: 1px solid transparent;
+
+  &:hover {
+    background: var(--color-hover);
+  }
+
+  &.selected {
+    background: var(--color-selected);
+    border-color: v.$color-orange-500;
+  }
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.info {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-weight: 600;
+  font-size: v.$font-size-sm;
+  color: var(--color-text-strong);
+  @include m.truncate;
+}
+
+.city {
+  font-size: v.$font-size-xs;
+  color: var(--color-text-muted);
+  @include m.truncate;
+}
+
+.distance {
+  flex-shrink: 0;
+  font-size: v.$font-size-sm;
+  font-weight: 700;
+  color: v.$color-orange-600;
+}

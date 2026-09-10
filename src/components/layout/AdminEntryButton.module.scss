@@ -1,0 +1,31 @@
+@use '../../styles/mixins' as m;
+
+.fab {
+  @include m.fab;
+  text-decoration: none;
+  color: var(--color-text-muted);
+
+  &:hover {
+    color: var(--color-text-strong);
+  }
+}
+
+.inline {
+  @include m.button-reset;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--color-text-muted);
+  transition: background 150ms ease;
+
+  &:hover {
+    background: var(--color-border);
+    color: var(--color-text-strong);
+  }
+
+  @include m.focus-ring;
+}

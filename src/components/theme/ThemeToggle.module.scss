@@ -1,0 +1,20 @@
+@use '../../styles/mixins' as m;
+
+.toggle {
+  @include m.button-reset;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-surface-muted);
+  color: var(--color-text-strong);
+  transition: background 150ms ease;
+
+  &:hover {
+    background: var(--color-border);
+  }
+
+  @include m.focus-ring;
+}

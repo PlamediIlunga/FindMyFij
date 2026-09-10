@@ -1,0 +1,113 @@
+@use 'variables' as v;
+
+@mixin mobile {
+  @media (max-width: #{v.$breakpoint-mobile}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (min-width: #{v.$breakpoint-mobile + 1px}) and (max-width: #{v.$breakpoint-tablet}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{v.$breakpoint-tablet + 1px}) {
+    @content;
+  }
+}
+
+@mixin not-mobile {
+  @media (min-width: #{v.$breakpoint-mobile + 1px}) {
+    @content;
+  }
+}
+
+@mixin card {
+  background: var(--color-surface);
+  border-radius: v.$radius-md;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--color-border);
+}
+
+@mixin focus-ring {
+  &:focus-visible {
+    outline: 2px solid v.$color-orange-500;
+    outline-offset: 2px;
+  }
+}
+
+@mixin button-reset {
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  font: inherit;
+  color: inherit;
+}
+
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-scrollbar) transparent;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--color-scrollbar);
+    border-radius: v.$radius-pill;
+  }
+}
+
+// Surface "posée sur la carte" : légèrement translucide + flou, comme les
+// pills de recherche et fiches de Google Maps. Se dégrade proprement (fond
+// plein, pas de flou) si backdrop-filter n'est pas supporté.
+@mixin floating-surface {
+  background: var(--color-surface-float);
+  box-shadow: v.$shadow-float;
+
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    background: var(--color-surface-float-glass);
+    backdrop-filter: blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+  }
+}
+
+// Bouton rond flottant (localisation, thème...) — cible tactile de 44px min.
+@mixin fab {
+  @include button-reset;
+  @include floating-surface;
+  width: v.$fab-size;
+  height: v.$fab-size;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-strong);
+  flex-shrink: 0;
+  transition: transform v.$transition-fast, background v.$transition-fast;
+
+  &:hover {
+    transform: translateY(-1px);
+  }
+  &:active {
+    transform: translateY(0) scale(0.96);
+  }
+
+  @include focus-ring;
+}
+
+@mixin hide-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}

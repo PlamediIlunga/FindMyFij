@@ -1,0 +1,79 @@
+@use '../styles/variables' as v;
+@use '../styles/mixins' as m;
+
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  width: 100%;
+  background: var(--color-bg);
+}
+
+.body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.mapArea {
+  flex: 1;
+  position: relative;
+  min-width: 0;
+}
+
+// --- Barre flottante supérieure mobile (recherche + thème + admin + chips) ---
+.mobileTopBar {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: v.$z-controls;
+  padding: calc(v.$space-3 + var(--safe-top)) v.$space-3 0;
+  display: flex;
+  flex-direction: column;
+  gap: v.$space-2;
+
+  @include m.mobile {
+    display: flex;
+  }
+}
+
+.mobileSearchRow {
+  display: flex;
+  align-items: center;
+  gap: v.$space-2;
+}
+
+.mobileSearchGrow {
+  flex: 1;
+  min-width: 0;
+}
+
+// --- Pile de boutons flottants (FAB) au-dessus de la feuille inférieure ---
+.mobileFabStack {
+  display: none;
+  position: absolute;
+  right: calc(v.$space-3 + var(--safe-right));
+  bottom: calc(v.$sheet-peek-height + v.$space-3);
+  z-index: v.$z-fab;
+  flex-direction: column;
+  gap: v.$space-2;
+
+  @include m.mobile {
+    display: flex;
+  }
+}
+
+.desktopOnly {
+  @include m.mobile {
+    display: none !important;
+  }
+}
+
+.mobileOnly {
+  display: none;
+  @include m.mobile {
+    display: block;
+  }
+}
