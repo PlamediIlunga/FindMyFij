@@ -4,7 +4,6 @@ import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { FijAdminDashboard } from './FijAdminDashboard';
 import styles from './admin.module.scss';
 import { LogoutButton } from '@/components/admin/LogoutButton';
-import { FijImport } from './FijImport';
 
 export default async function AdminFijPage() {
   const fijList = await getAllFij();
@@ -36,7 +35,6 @@ export default async function AdminFijPage() {
       </header>
 
       <main className={styles.content}>
-        <FijImport />
         <FijAdminDashboard fijList={fijList} />
       </main>
 

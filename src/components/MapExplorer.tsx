@@ -134,6 +134,9 @@ export function MapExplorer({ initialFij }: MapExplorerProps) {
       source: 'address',
     });
     flyTo(result.latitude, result.longitude, 13);
+    // Une recherche d'adresse sert à comparer les FIJ proches : sur mobile,
+    // ouvrir directement la feuille à mi-hauteur rend le résultat visible.
+    requestSheetSnap('half');
   }
 
   function handleLocated(position: { latitude: number; longitude: number }) {

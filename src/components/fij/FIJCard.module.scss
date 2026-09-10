@@ -7,11 +7,12 @@
   align-items: center;
   gap: v.$space-3;
   width: 100%;
-  padding: v.$space-3;
-  border-radius: v.$radius-md;
+  padding: v.$space-3 v.$space-2;
+  border-radius: v.$radius-sm;
   text-align: left;
   transition: background v.$transition-fast, border-color v.$transition-fast;
   border: 1px solid transparent;
+  border-bottom-color: var(--color-border);
 
   &:hover {
     background: var(--color-hover);
@@ -21,6 +22,8 @@
     background: var(--color-selected);
     border-color: v.$color-orange-500;
   }
+
+  &:focus-visible { outline: none; border-color: v.$color-orange-500; box-shadow: 0 0 0 3px rgba(255,106,44,.15); }
 }
 
 .dot {
@@ -48,6 +51,7 @@
   @include m.truncate;
 }
 .closed { color: v.$color-danger; font-weight: 700; }
+.statusNote { color: var(--color-text-muted); font-size: v.$font-size-xs; @include m.truncate; }
 
 .distance {
   flex-shrink: 0;

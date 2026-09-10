@@ -1,10 +1,16 @@
 'use client';
 
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import { FIJ_CATEGORIES, type Fij, type FijInput, type FijStatus } from '@/types/fij';
 import { CANADIAN_PROVINCES, getCitiesForProvince } from '@/data/canadaLocations';
 import { SelectOrCustom } from './SelectOrCustom';
 import styles from './FIJForm.module.scss';
+
+const FijLocationPicker = dynamic(
+  () => import('./FijLocationPicker').then((module) => module.FijLocationPicker),
+  { ssr: false, loading: () => <p className={styles.mapLoading}>Chargement de la carte d’ajustement…</p> }
+);
 
 interface FIJFormProps {
   initialData?: Fij;
@@ -27,6 +33,7 @@ export function FIJForm({ initialData, submitLabel = 'Enregistrer', onSubmit }: 
   const [phone, setPhone] = useState(initialData?.phone ?? '');
   const [unitNumber, setUnitNumber] = useState(initialData?.unitNumber ?? '');
   const [status, setStatus] = useState<FijStatus>(initialData?.status ?? 'open');
+  const [statusNote, setStatusNote] = useState(initialData?.statusNote ?? '');
 
   const [latitude, setLatitude] = useState(initialData ? String(initialData.latitude) : '');
   const [longitude, setLongitude] = useState(initialData ? String(initialData.longitude) : '');
@@ -132,6 +139,7 @@ export function FIJForm({ initialData, submitLabel = 'Enregistrer', onSubmit }: 
         phone: phone.trim() || undefined,
         unitNumber: unitNumber.trim() || undefined,
         status,
+        statusNote: status === 'closed' ? statusNote.trim() || undefined : undefined,
         latitude: parsedLatitude,
         longitude: parsedLongitude,
       });
@@ -263,6 +271,7 @@ export function FIJForm({ initialData, submitLabel = 'Enregistrer', onSubmit }: 
               </button>
             ))}
           </div>
+          {status === 'closed' && <div className={styles.field}><label className={styles.label} htmlFor="statusNote">Note de fermeture (optionnel)</label><input id="statusNote" className={styles.input} value={statusNote} onChange={(e) => setStatusNote(e.target.value)} placeholder="Ex : Fermé exceptionnellement ce soir" maxLength={160} /></div>}
         </div>
       )}
 
@@ -319,6 +328,13 @@ export function FIJForm({ initialData, submitLabel = 'Enregistrer', onSubmit }: 
         pas trouvée ou si la position doit être affinée (clic droit sur un point dans Google Maps
         pour copier ses coordonnées).
       </p>
+
+      {Number.isFinite(parseFloat(latitude)) && Number.isFinite(parseFloat(longitude)) && (
+        <div className={styles.field}>
+          <span className={styles.label}>Position précise sur la carte</span>
+          <FijLocationPicker latitude={parseFloat(latitude)} longitude={parseFloat(longitude)} onChange={(nextLatitude, nextLongitude) => { setLatitude(nextLatitude.toFixed(6)); setLongitude(nextLongitude.toFixed(6)); setGeocodeStatus('success'); setGeocodeMessage('Position ajustée manuellement.'); }} />
+        </div>
+      )}
 
       {formError && <p className={styles.formError}>{formError}</p>}
 

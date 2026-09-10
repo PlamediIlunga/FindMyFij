@@ -4,6 +4,11 @@
 .importer h2 { margin: 0 0 v.$space-2; color: var(--color-text-strong); font-family: v.$font-display; font-size: v.$font-size-lg; }
 .importer p { color: var(--color-text-muted); font-size: v.$font-size-sm; }
 .summary { font-weight: 700; }
+.fileRow { display: flex; align-items: center; flex-wrap: wrap; gap: v.$space-2; }
+.fileInput { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.fileButton { padding: v.$space-2 v.$space-3; border: 1px solid var(--color-border-strong); border-radius: v.$radius-sm; background: var(--color-surface-muted); color: var(--color-text-strong); font-size: v.$font-size-sm; font-weight: 700; cursor: pointer; }
+.fileButton:hover { border-color: v.$color-orange-500; color: v.$color-orange-600; }
+.fileName { color: var(--color-text-muted); font-size: v.$font-size-sm; overflow-wrap: anywhere; }
 .preview { max-height: 260px; overflow: auto; border: 1px solid var(--color-border); border-radius: v.$radius-sm; }
 .preview table { border-collapse: collapse; width: 100%; font-size: v.$font-size-sm; }.preview th,.preview td { padding: v.$space-2; text-align: left; border-bottom: 1px solid var(--color-border); }.invalid { color: v.$color-danger; }
 .importButton { @include m.button-reset; margin-top: v.$space-3; padding: v.$space-3 v.$space-5; border-radius: v.$radius-pill; color: v.$color-white; background: v.$color-orange-500; font-weight: 800; }.importButton:hover:not(:disabled) { background: v.$color-orange-600; }.importButton:disabled { opacity: .6; cursor: progress; }

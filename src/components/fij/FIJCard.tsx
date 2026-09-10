@@ -25,6 +25,7 @@ export function FIJCard({ fij, distanceMeters, isSelected, onSelect }: FIJCardPr
         <br />
         <span className={styles.city}>{fij.city}</span>
         {fij.status === 'closed' && <span className={styles.closed}> · Fermé</span>}
+        {fij.status === 'closed' && fij.statusNote && <><br /><span className={styles.statusNote}>{fij.statusNote}</span></>}
       </span>
       {distanceMeters !== undefined && (
         <span className={styles.distance}>{formatDistance(distanceMeters)}</span>

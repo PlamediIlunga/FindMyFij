@@ -15,6 +15,7 @@ create table if not exists public.fij (
   phone text,
   unit_number text,
   status text not null default 'open' check (status in ('open', 'closed')),
+  status_note text,
   latitude double precision not null,
   longitude double precision not null,
   created_at timestamptz not null default now(),
@@ -33,6 +34,7 @@ create index if not exists fij_country_idx on public.fij (country);
 alter table public.fij add column if not exists phone text;
 alter table public.fij add column if not exists unit_number text;
 alter table public.fij add column if not exists status text not null default 'open';
+alter table public.fij add column if not exists status_note text;
 alter table public.fij drop constraint if exists fij_status_check;
 alter table public.fij add constraint fij_status_check check (status in ('open', 'closed'));
 -- create index if not exists fij_province_idx on public.fij (province);

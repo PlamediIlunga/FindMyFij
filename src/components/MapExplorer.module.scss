@@ -30,7 +30,6 @@
   right: 0;
   z-index: v.$z-controls;
   padding: calc(v.$space-3 + var(--safe-top)) v.$space-3 0;
-  display: flex;
   flex-direction: column;
   gap: v.$space-2;
 
@@ -66,10 +65,13 @@
 }
 
 .desktopOnly {
+  min-height: 0;
   @include m.mobile {
     display: none !important;
   }
 }
+
+.body > .desktopOnly { min-height: 0; }
 
 .mobileOnly {
   display: none;

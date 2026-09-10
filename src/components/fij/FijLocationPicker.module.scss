@@ -1,0 +1,5 @@
+@use '../../styles/variables' as v;
+.wrapper { border: 1px solid var(--color-border-strong); border-radius: v.$radius-md; overflow: hidden; background: var(--color-surface-muted); }
+.map { height: 230px; width: 100%; }
+.hint { margin: 0; padding: v.$space-2 v.$space-3; color: var(--color-text-muted); font-size: v.$font-size-xs; }
+.pin { background: transparent; border: 0; }.pin span { display: block; width: 34px; height: 34px; border: 3px solid #fff; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); background: #FF6A2C; box-shadow: 0 4px 12px rgba(12,12,46,.35); color: #fff; font: 700 17px Arial; text-align: center; line-height: 28px; }.pin span::first-letter { display: inline-block; transform: rotate(45deg); }

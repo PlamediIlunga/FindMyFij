@@ -45,6 +45,8 @@ export interface Fij {
   unitNumber?: string;
   /** Une FIJ fermée reste visible afin d'éviter un déplacement inutile. */
   status: FijStatus;
+  /** Courte explication optionnelle, visible uniquement si la FIJ est fermée. */
+  statusNote?: string;
   latitude: number;
   longitude: number;
   createdAt: string;

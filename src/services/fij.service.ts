@@ -27,6 +27,7 @@ interface FijRow {
   phone: string | null;
   unit_number: string | null;
   status: Fij['status'];
+  status_note: string | null;
   latitude: number;
   longitude: number;
   created_at: string;
@@ -46,6 +47,7 @@ function rowToFij(row: FijRow): Fij {
     phone: row.phone ?? undefined,
     unitNumber: row.unit_number ?? undefined,
     status: row.status ?? 'open',
+    statusNote: row.status_note ?? undefined,
     latitude: row.latitude,
     longitude: row.longitude,
     createdAt: row.created_at,
@@ -104,6 +106,7 @@ export async function createFij(input: FijInput): Promise<Fij> {
       phone: input.phone || null,
       unit_number: input.unitNumber || null,
       status: input.status,
+      status_note: input.statusNote || null,
       latitude: input.latitude,
       longitude: input.longitude,
     })
@@ -132,6 +135,7 @@ export async function updateFij(id: string, input: FijUpdateInput): Promise<Fij>
   if (input.phone !== undefined) patch.phone = input.phone || null;
   if (input.unitNumber !== undefined) patch.unit_number = input.unitNumber || null;
   if (input.status !== undefined) patch.status = input.status;
+  if (input.statusNote !== undefined) patch.status_note = input.statusNote || null;
   if (input.latitude !== undefined) patch.latitude = input.latitude;
   if (input.longitude !== undefined) patch.longitude = input.longitude;
 
@@ -158,7 +162,7 @@ export async function createManyFij(inputs: FijInput[]): Promise<Fij[]> {
     .insert(inputs.map((input) => ({
       name: input.name, category: input.category, address: input.address, city: input.city,
       province: input.province, country: input.country, postal_code: input.postalCode,
-      phone: input.phone || null, unit_number: input.unitNumber || null, status: input.status,
+      phone: input.phone || null, unit_number: input.unitNumber || null, status: input.status, status_note: input.statusNote || null,
       latitude: input.latitude, longitude: input.longitude,
     })))
     .select('*');

@@ -144,3 +144,11 @@
 .nearestButton:hover:not(:disabled) { background: v.$color-orange-600; }
 .nearestButton:disabled { opacity: .55; cursor: not-allowed; }
 .nearestError { margin: v.$space-2 0 0; color: v.$color-danger; font-size: v.$font-size-xs; }
+
+@include m.mobile {
+  .nearestBox { margin-top: v.$space-2; padding: v.$space-2; border-radius: v.$radius-sm; }
+  .nearestLabel { font-size: v.$font-size-xs; line-height: 1.25; }
+  .nearestHint { display: none; }
+  .nearestInput { min-height: 34px; padding: 6px v.$space-2; font-size: v.$font-size-sm; }
+  .nearestButton { padding: 6px v.$space-2; }
+}

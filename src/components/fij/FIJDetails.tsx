@@ -26,7 +26,7 @@ export function FIJDetails({ fij, onViewFullPage }: FIJDetailsProps) {
         {fij.category}
       </span>
       <h3 className={styles.name}>{fij.name}</h3>
-      {fij.status === 'closed' && <span className={styles.closedBadge}>Fermé</span>}
+      {fij.status === 'closed' && <><span className={styles.closedBadge}>Fermé</span>{fij.statusNote && <p className={styles.statusNote}>{fij.statusNote}</p>}</>}
       <p className={styles.address}>
         <svg
           className={styles.pinIcon}

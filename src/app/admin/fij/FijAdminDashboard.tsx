@@ -5,6 +5,7 @@ import { useMemo, useState } from 'react';
 import { getProvinceName } from '@/data/canadaLocations';
 import { CATEGORY_COLORS, FIJ_CATEGORIES, type Fij, type FijGroupBy } from '@/types/fij';
 import { FijDeleteButton } from './FijDeleteButton';
+import { normalizeText } from '@/lib/normalizeText';
 import styles from './FijAdminDashboard.module.scss';
 
 interface FijAdminDashboardProps {
@@ -44,6 +45,7 @@ export function FijAdminDashboard({ fijList }: FijAdminDashboardProps) {
   const [filterCity, setFilterCity] = useState<string>('all');
   const [filterProvince, setFilterProvince] = useState<string>('all');
   const [filterCountry, setFilterCountry] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState('');
 
   const uniqueCities = useMemo(
     () => Array.from(new Set(fijList.map((f) => f.city))).sort((a, b) => a.localeCompare(b, 'fr')),
@@ -74,13 +76,15 @@ export function FijAdminDashboard({ fijList }: FijAdminDashboardProps) {
   const filteredList = useMemo(
     () =>
       fijList.filter((fij) => {
+        const searchable = normalizeText(`${fij.name} ${fij.address} ${fij.city} ${fij.postalCode}`);
+        if (searchQuery && !searchable.includes(normalizeText(searchQuery))) return false;
         if (filterCategory !== 'all' && fij.category !== filterCategory) return false;
         if (filterCity !== 'all' && fij.city !== filterCity) return false;
         if (filterProvince !== 'all' && fij.province !== filterProvince) return false;
         if (filterCountry !== 'all' && fij.country !== filterCountry) return false;
         return true;
       }),
-    [fijList, filterCategory, filterCity, filterProvince, filterCountry]
+    [fijList, filterCategory, filterCity, filterProvince, filterCountry, searchQuery]
   );
 
   const grouped = useMemo(() => {
@@ -158,6 +162,10 @@ export function FijAdminDashboard({ fijList }: FijAdminDashboardProps) {
       </div>
 
       <div className={styles.controls}>
+        <div className={styles.searchGroup}>
+          <label className={styles.controlLabel} htmlFor="adminSearch">Rechercher une FIJ</label>
+          <input id="adminSearch" className={styles.searchInput} value={searchQuery} onChange={(event) => setSearchQuery(event.target.value)} placeholder="Nom, adresse, ville ou code postal" />
+        </div>
         <div className={styles.controlGroup}>
           <label className={styles.controlLabel} htmlFor="groupBy">
             Grouper par
@@ -323,7 +331,7 @@ export function FijAdminDashboard({ fijList }: FijAdminDashboardProps) {
                     <td data-label="Ville">{fij.city}</td>
                     <td data-label="Province">{getProvinceName(fij.province)}</td>
                     <td data-label="Pays">{fij.country}</td>
-                    <td data-label="Statut">{fij.status === 'open' ? 'Ouvert' : 'Fermé'}</td>
+                    <td data-label="Statut">{fij.status === 'open' ? 'Ouvert' : <>Fermé{fij.statusNote && <><br /><small>{fij.statusNote}</small></>}</>}</td>
                     <td data-label="" className={styles.actionsCell}>
                       <Link
                         href={`/admin/fij/${fij.id}/edit`}

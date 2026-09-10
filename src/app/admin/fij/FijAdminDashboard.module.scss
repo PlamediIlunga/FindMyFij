@@ -49,6 +49,8 @@
   color: var(--color-text-muted);
 }
 
+@include m.mobile { .statStrip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); overflow: visible; } .statCard { min-width: 0; padding: v.$space-3; } }
+
 // --- Barre de contrôles / filtres ---
 .controls {
   display: flex;
@@ -84,6 +86,10 @@
     width: 100%;
   }
 }
+
+.searchGroup { display: flex; flex-direction: column; gap: v.$space-1; min-width: min(100%, 300px); flex: 1 1 260px; }
+.searchInput { min-height: 40px; padding: v.$space-2 v.$space-3; border: 1px solid var(--color-border-strong); border-radius: v.$radius-sm; background: var(--color-input-bg); color: var(--color-text-strong); font-size: v.$font-size-sm; }
+.searchInput:focus-visible { outline: none; border-color: v.$color-orange-500; box-shadow: 0 0 0 3px rgba(255,106,44,.15); }
 
 .controlLabel {
   font-size: v.$font-size-xs;
@@ -266,6 +272,8 @@
   padding: 2px v.$space-2;
   border-radius: v.$radius-pill;
 }
+
+.table small { color: var(--color-text-muted); font-size: v.$font-size-xs; line-height: 1.35; }
 
 .actionsCell {
   display: flex;

@@ -16,7 +16,7 @@ export async function requestPasswordResetAction(formData: FormData): Promise<Lo
   const email = String(formData.get('email') ?? '').trim();
   if (!email) return { error: 'Veuillez renseigner votre adresse email.' };
   const { error } = await getSupabaseServerClient().auth.resetPasswordForEmail(email, {
-    redirectTo: `${appOrigin()}/auth/callback?next=/admin/reset-password`,
+    redirectTo: `${appOrigin()}/admin/reset-password`,
   });
   if (error) return { error: 'Impossible d’envoyer le lien pour le moment. Réessayez plus tard.' };
   return { error: '' };
