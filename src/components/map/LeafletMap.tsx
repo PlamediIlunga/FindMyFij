@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, type MutableRefObject } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap, ZoomControl } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap, ZoomControl } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import L from 'leaflet';
 import type { Fij, ReferencePoint } from '@/types/fij';
@@ -22,6 +22,7 @@ interface LeafletMapProps {
   onSelectFij: (fij: Fij) => void;
   onViewFullFij?: (fij: Fij) => void;
   referencePoint: ReferencePoint | null;
+  nearestFijId: string | null;
   flyToTarget: FlyToTarget | null;
 }
 
@@ -71,6 +72,7 @@ export default function LeafletMap({
   onSelectFij,
   onViewFullFij,
   referencePoint,
+  nearestFijId,
   flyToTarget,
 }: LeafletMapProps) {
   const markerRefs = useRef<Record<string, L.Marker | null>>({});
@@ -134,6 +136,13 @@ export default function LeafletMap({
           }
         />
       )}
+      {referencePoint && nearestFijId && (() => {
+        const nearest = fijList.find((fij) => fij.id === nearestFijId);
+        if (!nearest) return null;
+        // Ligne droite intentionnelle : elle représente la distance Haversine affichée,
+        // pas un itinéraire routier (qui nécessiterait un service de routing dédié).
+        return <Polyline positions={[[referencePoint.latitude, referencePoint.longitude], [nearest.latitude, nearest.longitude]]} pathOptions={{ color: '#FF6A2C', weight: 4, opacity: 0.85, dashArray: '8 8' }} />;
+      })()}
     </MapContainer>
   );
 }

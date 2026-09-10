@@ -4,9 +4,8 @@ import { CATEGORY_COLORS, type FijCategory } from '@/types/fij';
 const iconCache = new Map<string, L.DivIcon>();
 
 /**
- * Crée (et met en cache) une icône de marqueur ronde colorée selon la
- * catégorie de FIJ. On utilise un divIcon plutôt qu'une image pour rester
- * léger et pouvoir styliser facilement (sélection, hover) en CSS.
+ * Pin à glyphe, plus lisible qu'un simple point et visuellement proche des
+ * repères cartographiques courants sans dépendre d'une image externe.
  */
 export function getFijIcon(category: FijCategory, isSelected = false): L.DivIcon {
   const cacheKey = `${category}-${isSelected ? 'selected' : 'default'}`;
@@ -14,7 +13,8 @@ export function getFijIcon(category: FijCategory, isSelected = false): L.DivIcon
   if (cached) return cached;
 
   const color = CATEGORY_COLORS[category];
-  const size = isSelected ? 34 : 26;
+  const size = isSelected ? 42 : 34;
+  const glyph = category === 'Jeunes' ? '✦' : '●';
 
   const icon = L.divIcon({
     className: 'fij-marker-icon',
@@ -23,17 +23,18 @@ export function getFijIcon(category: FijCategory, isSelected = false): L.DivIcon
         display:block;
         width:${size}px;
         height:${size}px;
-        border-radius:50%;
+        border-radius:50% 50% 50% 0;
         background:${color};
-        border:3px solid #ffffff;
-        box-shadow:0 2px 8px rgba(12,12,46,0.35);
-        transform:${isSelected ? 'scale(1.1)' : 'scale(1)'};
+        border:3px solid #ffffff; color:#fff; font:800 ${Math.round(size * .48)}px Arial;
+        text-align:center; line-height:${size - 6}px;
+        box-shadow:0 5px 14px rgba(12,12,46,0.42);
+        transform:rotate(-45deg) ${isSelected ? 'scale(1.15)' : 'scale(1)'};
         transition: transform 150ms ease;
-      "></span>
+      "><i style="display:block;font-style:normal;transform:rotate(45deg)">${glyph}</i></span>
     `,
     iconSize: [size, size],
-    iconAnchor: [size / 2, size / 2],
-    popupAnchor: [0, -size / 2],
+    iconAnchor: [size / 2, size],
+    popupAnchor: [0, -size],
   });
 
   iconCache.set(cacheKey, icon);

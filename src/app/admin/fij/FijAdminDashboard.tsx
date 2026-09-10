@@ -304,6 +304,7 @@ export function FijAdminDashboard({ fijList }: FijAdminDashboardProps) {
                   <th>Ville</th>
                   <th>Province</th>
                   <th>Pays</th>
+                  <th>Statut</th>
                   <th aria-label="Actions"></th>
                 </tr>
               </thead>
@@ -322,6 +323,7 @@ export function FijAdminDashboard({ fijList }: FijAdminDashboardProps) {
                     <td data-label="Ville">{fij.city}</td>
                     <td data-label="Province">{getProvinceName(fij.province)}</td>
                     <td data-label="Pays">{fij.country}</td>
+                    <td data-label="Statut">{fij.status === 'open' ? 'Ouvert' : 'Fermé'}</td>
                     <td data-label="" className={styles.actionsCell}>
                       <Link
                         href={`/admin/fij/${fij.id}/edit`}

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { FIJ_CATEGORIES, type Fij, type FijInput } from '@/types/fij';
+import { FIJ_CATEGORIES, type Fij, type FijInput, type FijStatus } from '@/types/fij';
 import { CANADIAN_PROVINCES, getCitiesForProvince } from '@/data/canadaLocations';
 import { SelectOrCustom } from './SelectOrCustom';
 import styles from './FIJForm.module.scss';
@@ -24,6 +24,9 @@ export function FIJForm({ initialData, submitLabel = 'Enregistrer', onSubmit }: 
   const [province, setProvince] = useState(initialData?.province ?? '');
   const [postalCode, setPostalCode] = useState(initialData?.postalCode ?? '');
   const [country, setCountry] = useState(initialData?.country ?? 'Canada');
+  const [phone, setPhone] = useState(initialData?.phone ?? '');
+  const [unitNumber, setUnitNumber] = useState(initialData?.unitNumber ?? '');
+  const [status, setStatus] = useState<FijStatus>(initialData?.status ?? 'open');
 
   const [latitude, setLatitude] = useState(initialData ? String(initialData.latitude) : '');
   const [longitude, setLongitude] = useState(initialData ? String(initialData.longitude) : '');
@@ -126,6 +129,9 @@ export function FIJForm({ initialData, submitLabel = 'Enregistrer', onSubmit }: 
         province: province.trim(),
         postalCode: postalCode.trim(),
         country: country.trim(),
+        phone: phone.trim() || undefined,
+        unitNumber: unitNumber.trim() || undefined,
+        status,
         latitude: parsedLatitude,
         longitude: parsedLongitude,
       });
@@ -235,6 +241,30 @@ export function FIJForm({ initialData, submitLabel = 'Enregistrer', onSubmit }: 
           required
         />
       </div>
+
+      <div className={styles.row}>
+        <div className={styles.field}>
+          <label className={styles.label} htmlFor="unitNumber">Appartement / local (optionnel)</label>
+          <input id="unitNumber" className={styles.input} value={unitNumber} onChange={(e) => setUnitNumber(e.target.value)} placeholder="Ex : local 201" />
+        </div>
+        <div className={styles.field}>
+          <label className={styles.label} htmlFor="phone">Téléphone (optionnel)</label>
+          <input id="phone" className={styles.input} type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="819 555-1234" />
+        </div>
+      </div>
+
+      {initialData && (
+        <div className={styles.field}>
+          <span className={styles.label}>Disponibilité publique</span>
+          <div className={styles.statusToggle} role="group" aria-label="Statut de la FIJ">
+            {(['open', 'closed'] as FijStatus[]).map((value) => (
+              <button key={value} type="button" className={status === value ? styles.statusActive : styles.statusOption} onClick={() => setStatus(value)}>
+                {value === 'open' ? 'Ouvert' : 'Fermé'}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
 
       <div className={styles.geocodeRow}>
         <button

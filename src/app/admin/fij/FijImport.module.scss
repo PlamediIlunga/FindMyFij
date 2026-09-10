@@ -1,0 +1,9 @@
+@use '../../../styles/variables' as v;
+@use '../../../styles/mixins' as m;
+.importer { margin-bottom: v.$space-6; padding: v.$space-5; border: 1px solid var(--color-border); border-radius: v.$radius-md; background: var(--color-surface); box-shadow: var(--shadow-sm); }
+.importer h2 { margin: 0 0 v.$space-2; color: var(--color-text-strong); font-family: v.$font-display; font-size: v.$font-size-lg; }
+.importer p { color: var(--color-text-muted); font-size: v.$font-size-sm; }
+.summary { font-weight: 700; }
+.preview { max-height: 260px; overflow: auto; border: 1px solid var(--color-border); border-radius: v.$radius-sm; }
+.preview table { border-collapse: collapse; width: 100%; font-size: v.$font-size-sm; }.preview th,.preview td { padding: v.$space-2; text-align: left; border-bottom: 1px solid var(--color-border); }.invalid { color: v.$color-danger; }
+.importButton { @include m.button-reset; margin-top: v.$space-3; padding: v.$space-3 v.$space-5; border-radius: v.$radius-pill; color: v.$color-white; background: v.$color-orange-500; font-weight: 800; }.importButton:hover:not(:disabled) { background: v.$color-orange-600; }.importButton:disabled { opacity: .6; cursor: progress; }

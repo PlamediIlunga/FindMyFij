@@ -143,6 +143,10 @@
   }
 }
 
+.adminFooter { padding: v.$space-4 v.$space-6; text-align: right; }
+.adminFooter a { color: var(--color-text-muted); font-size: v.$font-size-xs; text-decoration: none; opacity: .5; }
+.adminFooter a:hover, .adminFooter a:focus-visible { color: v.$color-orange-500; opacity: 1; }
+
 // FAB "+" mobile, remplace le bouton d'ajout du header (masqué en dessous
 // du breakpoint) — plus accessible au pouce en bas de l'écran.
 .mobileFab {

@@ -224,3 +224,7 @@
     color: var(--color-text-strong);
   }
 }
+
+.textButton { @include m.button-reset; color: v.$color-orange-600; font-size: v.$font-size-sm; font-weight: 700; text-align: center; }
+.textButton:hover, .textButton:focus-visible { color: v.$color-navy-900; text-decoration: underline; }
+.success { color: v.$color-success; font-size: v.$font-size-sm; margin: 0; padding: v.$space-3; background: rgba(47, 168, 107, .1); border-radius: v.$radius-sm; }

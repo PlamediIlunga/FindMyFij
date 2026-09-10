@@ -35,6 +35,15 @@
   color: var(--color-text-strong);
 }
 
+.closedBadge {
+  display: inline-block; margin: 0 0 v.$space-3; padding: 3px v.$space-2;
+  border-radius: v.$radius-pill; background: rgba(232, 57, 74, .12);
+  color: v.$color-danger; font-size: v.$font-size-xs; font-weight: 800;
+}
+
+.phone { display: inline-block; margin: 0 0 v.$space-4; color: var(--color-text-strong); font-weight: 700; text-decoration: none; }
+.phone:hover, .phone:focus-visible { color: v.$color-orange-600; text-decoration: underline; }
+
 .address {
   display: flex;
   align-items: flex-start;

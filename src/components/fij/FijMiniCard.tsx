@@ -36,6 +36,7 @@ export function FijMiniCard({ fij, distanceMeters, onViewDetails, onClose }: Fij
           <p className={styles.name}>{fij.name}</p>
           <p className={styles.meta}>
             {fij.category} · {fij.city}
+            {fij.status === 'closed' ? ' · Fermé' : ''}
             {distanceMeters !== undefined ? ` · ${formatDistance(distanceMeters)}` : ''}
           </p>
         </div>

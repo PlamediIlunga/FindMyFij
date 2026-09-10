@@ -47,6 +47,7 @@
   color: var(--color-text-muted);
   @include m.truncate;
 }
+.closed { color: v.$color-danger; font-weight: 700; }
 
 .distance {
   flex-shrink: 0;

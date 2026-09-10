@@ -215,6 +215,7 @@ export function MapExplorer({ initialFij }: MapExplorerProps) {
             onSelectFij={handleSelectFij}
             onViewFullFij={handleViewFullFij}
             referencePoint={referencePoint}
+            nearestFijId={nearbyFij[0]?.id ?? null}
             flyToTarget={flyToTarget}
           />
         </div>

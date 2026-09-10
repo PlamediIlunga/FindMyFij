@@ -161,3 +161,8 @@
   margin: 0;
   line-height: 1.5;
 }
+
+.statusToggle { display: flex; gap: v.$space-2; }
+.statusOption, .statusActive { @include m.button-reset; padding: v.$space-2 v.$space-4; border: 1px solid var(--color-border-strong); border-radius: v.$radius-pill; color: var(--color-text-muted); background: var(--color-surface-muted); font-weight: 700; }
+.statusOption:hover, .statusOption:focus-visible { border-color: v.$color-orange-500; color: var(--color-text-strong); }
+.statusActive { background: v.$color-orange-500; border-color: v.$color-orange-500; color: v.$color-white; }

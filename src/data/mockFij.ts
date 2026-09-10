@@ -6,7 +6,7 @@ import type { Fij } from '@/types/fij';
  * groupées pour que le clustering, la recherche et le calcul de proximité
  * soient réellement visibles.
  */
-export const MOCK_FIJ: Fij[] = [
+const MOCK_FIJ_DATA: Omit<Fij, 'status'>[] = [
   // --- Gatineau (secteur Hull) ---
   { id: 'fij-001', name: 'FIJ Espoir', category: 'Jeunes', address: '25 rue Laurier', city: 'Gatineau', province: 'QC', country: 'Canada', postalCode: 'J8X 3W3', latitude: 45.4290, longitude: -75.7173, createdAt: '2025-01-10T00:00:00Z', updatedAt: '2025-01-10T00:00:00Z' },
   { id: 'fij-002', name: 'FIJ Bethléem', category: 'Jeunes', address: '112 boul. Alexandre-Taché', city: 'Gatineau', province: 'QC', country: 'Canada', postalCode: 'J8Y 3S1', latitude: 45.4331, longitude: -75.7267, createdAt: '2025-01-10T00:00:00Z', updatedAt: '2025-01-10T00:00:00Z' },
@@ -46,3 +46,5 @@ export const MOCK_FIJ: Fij[] = [
   { id: 'fij-024', name: 'FIJ Laval', category: 'Jeunes', address: '1600 boul. Le Corbusier', city: 'Laval', province: 'QC', country: 'Canada', postalCode: 'H7S 2K1', latitude: 45.5601, longitude: -73.7242, createdAt: '2025-01-10T00:00:00Z', updatedAt: '2025-01-10T00:00:00Z' },
   { id: 'fij-025', name: 'FIJ Longueuil', category: 'Jeunes', address: '825 rue Saint-Laurent Ouest', city: 'Longueuil', province: 'QC', country: 'Canada', postalCode: 'J4K 1C9', latitude: 45.5312, longitude: -73.5182, createdAt: '2025-01-10T00:00:00Z', updatedAt: '2025-01-10T00:00:00Z' },
 ];
+
+export const MOCK_FIJ: Fij[] = MOCK_FIJ_DATA.map((fij) => ({ ...fij, status: 'open' }));

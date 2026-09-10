@@ -23,6 +23,7 @@ interface MapViewProps {
   onSelectFij: (fij: Fij) => void;
   onViewFullFij?: (fij: Fij) => void;
   referencePoint: ReferencePoint | null;
+  nearestFijId: string | null;
   flyToTarget: FlyToTarget | null;
 }
 

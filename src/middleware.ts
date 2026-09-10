@@ -30,9 +30,14 @@ export async function middleware(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
   const isLoginPage = pathname === '/admin/login';
+  const isResetPage = pathname === '/admin/reset-password';
+  const isRegisterPage = pathname === '/admin/register';
   const isAdminRoute = pathname.startsWith('/admin');
 
-  if (isAdminRoute && !isLoginPage && !user) {
+  if (isRegisterPage && !user) {
+    return NextResponse.redirect(new URL('/', request.url));
+  }
+  if (isAdminRoute && !isLoginPage && !isResetPage && !user) {
     const loginUrl = new URL('/admin/login', request.url);
     loginUrl.searchParams.set('redirectTo', pathname);
     return NextResponse.redirect(loginUrl);

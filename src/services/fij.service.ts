@@ -24,6 +24,9 @@ interface FijRow {
   province: string;
   country: string;
   postal_code: string;
+  phone: string | null;
+  unit_number: string | null;
+  status: Fij['status'];
   latitude: number;
   longitude: number;
   created_at: string;
@@ -40,6 +43,9 @@ function rowToFij(row: FijRow): Fij {
     province: row.province,
     country: row.country ?? DEFAULT_COUNTRY,
     postalCode: row.postal_code,
+    phone: row.phone ?? undefined,
+    unitNumber: row.unit_number ?? undefined,
+    status: row.status ?? 'open',
     latitude: row.latitude,
     longitude: row.longitude,
     createdAt: row.created_at,
@@ -95,6 +101,9 @@ export async function createFij(input: FijInput): Promise<Fij> {
       province: input.province,
       country: input.country,
       postal_code: input.postalCode,
+      phone: input.phone || null,
+      unit_number: input.unitNumber || null,
+      status: input.status,
       latitude: input.latitude,
       longitude: input.longitude,
     })
@@ -120,6 +129,9 @@ export async function updateFij(id: string, input: FijUpdateInput): Promise<Fij>
   if (input.province !== undefined) patch.province = input.province;
   if (input.country !== undefined) patch.country = input.country;
   if (input.postalCode !== undefined) patch.postal_code = input.postalCode;
+  if (input.phone !== undefined) patch.phone = input.phone || null;
+  if (input.unitNumber !== undefined) patch.unit_number = input.unitNumber || null;
+  if (input.status !== undefined) patch.status = input.status;
   if (input.latitude !== undefined) patch.latitude = input.latitude;
   if (input.longitude !== undefined) patch.longitude = input.longitude;
 
@@ -132,6 +144,26 @@ export async function updateFij(id: string, input: FijUpdateInput): Promise<Fij>
 
   if (error) throw new Error(`Impossible de modifier la FIJ : ${error.message}`);
   return rowToFij(data as FijRow);
+}
+
+/** Crée plusieurs FIJ déjà validées/géocodées en une seule écriture. */
+export async function createManyFij(inputs: FijInput[]): Promise<Fij[]> {
+  if (inputs.length === 0) return [];
+  if (!isSupabaseConfigured()) {
+    throw new Error('Supabase non configuré : impossible d’importer des FIJ en mode démo.');
+  }
+  const supabase = getSupabaseServerClient();
+  const { data, error } = await supabase
+    .from('fij')
+    .insert(inputs.map((input) => ({
+      name: input.name, category: input.category, address: input.address, city: input.city,
+      province: input.province, country: input.country, postal_code: input.postalCode,
+      phone: input.phone || null, unit_number: input.unitNumber || null, status: input.status,
+      latitude: input.latitude, longitude: input.longitude,
+    })))
+    .select('*');
+  if (error) throw new Error(`Impossible d’importer les FIJ : ${error.message}`);
+  return (data as FijRow[]).map(rowToFij);
 }
 
 /** Supprime une FIJ. */

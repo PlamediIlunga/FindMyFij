@@ -26,6 +26,7 @@ export function FIJDetails({ fij, onViewFullPage }: FIJDetailsProps) {
         {fij.category}
       </span>
       <h3 className={styles.name}>{fij.name}</h3>
+      {fij.status === 'closed' && <span className={styles.closedBadge}>Fermé</span>}
       <p className={styles.address}>
         <svg
           className={styles.pinIcon}
@@ -44,13 +45,18 @@ export function FIJDetails({ fij, onViewFullPage }: FIJDetailsProps) {
           <circle cx="12" cy="9.5" r="2.4" stroke="currentColor" strokeWidth="1.8" />
         </svg>
         <span>
-          {fij.address}
+          {fij.address}{fij.unitNumber && <> · {fij.unitNumber}</>}
           <br />
           {fij.city}, {fij.province} {fij.postalCode}
           <br />
           {fij.country}
         </span>
       </p>
+      {fij.phone && (
+        <a className={styles.phone} href={`tel:${fij.phone.replace(/[^+\d]/g, '')}`}>
+          ☎ {fij.phone}
+        </a>
+      )}
       <div className={styles.actions}>
         <a
           className={styles.buttonPrimary}

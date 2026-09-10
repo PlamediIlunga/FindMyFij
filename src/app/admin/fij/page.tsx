@@ -4,6 +4,7 @@ import { ThemeToggle } from '@/components/theme/ThemeToggle';
 import { FijAdminDashboard } from './FijAdminDashboard';
 import styles from './admin.module.scss';
 import { LogoutButton } from '@/components/admin/LogoutButton';
+import { FijImport } from './FijImport';
 
 export default async function AdminFijPage() {
   const fijList = await getAllFij();
@@ -35,8 +36,11 @@ export default async function AdminFijPage() {
       </header>
 
       <main className={styles.content}>
+        <FijImport />
         <FijAdminDashboard fijList={fijList} />
       </main>
+
+      <footer className={styles.adminFooter}><Link href="/admin/register" aria-label="Ajouter un compte administrateur">©</Link></footer>
 
       <Link href="/admin/fij/new" className={styles.mobileFab} aria-label="Ajouter une FIJ">
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>

@@ -11,6 +11,7 @@
  * raccourci de filtre (voir GLOBAL_FILTER_KEY dans CategoryFilter.tsx).
  */
 export type FijCategory = 'Jeunes' | 'Jeunes Ados';
+export type FijStatus = 'open' | 'closed';
 
 export const FIJ_CATEGORIES: FijCategory[] = ['Jeunes', 'Jeunes Ados'];
 
@@ -39,6 +40,11 @@ export interface Fij {
   province: string;
   country: string;
   postalCode: string;
+  /** Informations de contact facultatives. */
+  phone?: string;
+  unitNumber?: string;
+  /** Une FIJ fermée reste visible afin d'éviter un déplacement inutile. */
+  status: FijStatus;
   latitude: number;
   longitude: number;
   createdAt: string;

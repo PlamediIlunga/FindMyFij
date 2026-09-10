@@ -293,9 +293,9 @@
     border-color v.$transition-fast;
 
   &:hover {
-    background: rgba(255, 106, 44, 0.1);
-    color: v.$color-orange-600;
-    border-color: v.$color-orange-500;
+    background: rgba(38, 38, 106, 0.12);
+    color: var(--color-action-edit);
+    border-color: var(--color-action-edit);
   }
   &:active {
     transform: scale(0.94);
@@ -317,7 +317,8 @@
   transition: background v.$transition-fast, transform v.$transition-fast;
 
   &:hover:not(:disabled) {
-    background: rgba(232, 57, 74, 0.16);
+    background: v.$color-danger;
+    color: v.$color-white;
   }
   &:active:not(:disabled) {
     transform: scale(0.94);

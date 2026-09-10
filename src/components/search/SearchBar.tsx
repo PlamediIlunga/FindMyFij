@@ -21,6 +21,7 @@ function fijMatches(fij: Fij, query: string): boolean {
 
 export function SearchBar({ fijList, onSelectFij, onAddressGeocoded }: SearchBarProps) {
   const [query, setQuery] = useState('');
+  const [addressQuery, setAddressQuery] = useState('');
   const [isFocused, setIsFocused] = useState(false);
   const [isGeocoding, setIsGeocoding] = useState(false);
   const [geocodeError, setGeocodeError] = useState<string | null>(null);
@@ -34,8 +35,8 @@ export function SearchBar({ fijList, onSelectFij, onAddressGeocoded }: SearchBar
 
   const showDropdown = isFocused && query.trim().length > 0;
 
-  async function handleGeocodeSearch() {
-    const address = query.trim();
+  async function handleGeocodeSearch(value = query) {
+    const address = value.trim();
     if (!address) return;
     setIsGeocoding(true);
     setGeocodeError(null);
@@ -51,6 +52,7 @@ export function SearchBar({ fijList, onSelectFij, onAddressGeocoded }: SearchBar
         return;
       }
       onAddressGeocoded(data as GeocodeResult, address);
+      setAddressQuery(address);
       setIsFocused(false);
     } catch {
       setGeocodeError('Impossible de contacter le service de géocodage.');
@@ -140,7 +142,7 @@ export function SearchBar({ fijList, onSelectFij, onAddressGeocoded }: SearchBar
             type="button"
             className={styles.geocodeItem}
             onMouseDown={(event) => event.preventDefault()}
-            onClick={handleGeocodeSearch}
+            onClick={() => handleGeocodeSearch()}
             disabled={isGeocoding}
           >
             📍 {isGeocoding ? 'Recherche en cours…' : `Rechercher l'adresse « ${query} »`}
@@ -149,6 +151,15 @@ export function SearchBar({ fijList, onSelectFij, onAddressGeocoded }: SearchBar
           {geocodeError && <p className={styles.emptyState}>{geocodeError}</p>}
         </div>
       )}
+      <div className={styles.nearestBox}>
+        <label className={styles.nearestLabel} htmlFor="nearest-address">Trouver la FIJ la plus proche de mon adresse</label>
+        <p className={styles.nearestHint}>Sans partager votre position GPS.</p>
+        <div className={styles.nearestRow}>
+          <input id="nearest-address" className={styles.nearestInput} value={addressQuery} onChange={(event) => setAddressQuery(event.target.value)} placeholder="Votre adresse" onKeyDown={(event) => { if (event.key === 'Enter') handleGeocodeSearch(addressQuery); }} />
+          <button type="button" className={styles.nearestButton} onClick={() => handleGeocodeSearch(addressQuery)} disabled={isGeocoding || !addressQuery.trim()}>{isGeocoding ? '…' : 'Trouver'}</button>
+        </div>
+        {geocodeError && <p className={styles.nearestError}>{geocodeError}</p>}
+      </div>
     </div>
   );
 }
