@@ -17,7 +17,7 @@ type GeocodeStatus = 'idle' | 'loading' | 'success' | 'error';
 export function FIJForm({ initialData, submitLabel = 'Enregistrer', onSubmit }: FIJFormProps) {
   const [name, setName] = useState(initialData?.name ?? '');
   const [category, setCategory] = useState<Fij['category']>(
-    initialData?.category ?? FIJ_CATEGORIES[0]
+    initialData?.category ?? FIJ_CATEGORIES[0]!
   );
   const [address, setAddress] = useState(initialData?.address ?? '');
   const [city, setCity] = useState(initialData?.city ?? '');
