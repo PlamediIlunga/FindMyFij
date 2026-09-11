@@ -304,6 +304,7 @@ export function FijAdminDashboard({ fijList }: FijAdminDashboardProps) {
               </div>
             </header>
 
+            <div className={styles.tableScroll}>
             <table className={styles.table}>
               <thead>
                 <tr>
@@ -319,8 +320,8 @@ export function FijAdminDashboard({ fijList }: FijAdminDashboardProps) {
               <tbody>
                 {group.items.map((fij) => (
                   <tr key={fij.id}>
-                    <td data-label="Nom">{fij.name}</td>
-                    <td data-label="Catégorie">
+                    <td>{fij.name}</td>
+                    <td>
                       <span
                         className={styles.categoryTag}
                         style={{ background: CATEGORY_COLORS[fij.category] }}
@@ -328,11 +329,11 @@ export function FijAdminDashboard({ fijList }: FijAdminDashboardProps) {
                         {fij.category}
                       </span>
                     </td>
-                    <td data-label="Ville">{fij.city}</td>
-                    <td data-label="Province">{getProvinceName(fij.province)}</td>
-                    <td data-label="Pays">{fij.country}</td>
-                    <td data-label="Statut">{fij.status === 'open' ? 'Ouvert' : <>Fermé{fij.statusNote && <><br /><small>{fij.statusNote}</small></>}</>}</td>
-                    <td data-label="" className={styles.actionsCell}>
+                    <td>{fij.city}</td>
+                    <td>{getProvinceName(fij.province)}</td>
+                    <td>{fij.country}</td>
+                    <td>{fij.status === 'open' ? 'Ouvert' : <>Fermé{fij.statusNote && <><br /><small>{fij.statusNote}</small></>}</>}</td>
+                    <td className={styles.actionsCell}>
                       <Link
                         href={`/admin/fij/${fij.id}/edit`}
                         className={styles.editButton}
@@ -355,6 +356,7 @@ export function FijAdminDashboard({ fijList }: FijAdminDashboardProps) {
                 ))}
               </tbody>
             </table>
+            </div>
           </section>
         ))}
       </div>

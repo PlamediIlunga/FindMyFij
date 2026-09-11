@@ -187,12 +187,18 @@
   border-radius: v.$radius-pill;
 }
 
-// --- Table (desktop) / cartes empilées (mobile) ---
-// Technique classique de tableau responsive : on garde un vrai <table> pour
-// la sémantique et l'accessibilité, et on le restyle en liste de cartes en
-// dessous du breakpoint mobile via data-label + pseudo-élément.
+// --- Table, desktop et mobile ---
+// Un vrai <table> à toutes les tailles d'écran : sur mobile, il devient
+// scrollable horizontalement (voir .tableScroll) plutôt que d'être
+// transformé en cartes empilées verticalement.
+.tableScroll {
+  overflow-x: auto;
+  @include m.scrollbar-thin;
+}
+
 .table {
   width: 100%;
+  min-width: 640px; // force le scroll horizontal plutôt que d'écraser les colonnes sur mobile
   border-collapse: collapse;
 
   th {
@@ -203,6 +209,7 @@
     color: var(--color-text-muted);
     padding: v.$space-3 v.$space-4;
     border-bottom: 1px solid var(--color-border);
+    white-space: nowrap;
   }
 
   td {
@@ -210,6 +217,7 @@
     font-size: v.$font-size-sm;
     color: var(--color-text-strong);
     border-bottom: 1px solid var(--color-border);
+    white-space: nowrap;
   }
 
   tbody tr:hover {
@@ -220,45 +228,12 @@
   }
 
   @include m.mobile {
-    display: block;
+    min-width: 560px;
 
-    thead {
-      display: none;
-    }
-
-    tbody,
-    tr {
-      display: block;
-      width: 100%;
-    }
-
-    tr {
-      padding: v.$space-3 v.$space-4;
-      border-bottom: 1px solid var(--color-border);
-    }
-
+    th,
     td {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: v.$space-3;
-      padding: v.$space-2 0;
-      border-bottom: none;
-      text-align: right;
-
-      &::before {
-        content: attr(data-label);
-        font-size: v.$font-size-xs;
-        font-weight: 700;
-        color: var(--color-text-muted);
-        text-align: left;
-        flex-shrink: 0;
-      }
-
-      &:empty,
-      &[data-label='']::before {
-        content: '';
-      }
+      padding: v.$space-2 v.$space-3;
+      font-size: v.$font-size-xs;
     }
   }
 }
