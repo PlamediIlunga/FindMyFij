@@ -24,5 +24,6 @@
   display: flex;
   flex-direction: column;
   padding: v.$space-4 v.$space-5 v.$space-5;
-  overflow: hidden;
+  overflow-y: auto;
+  @include m.scrollbar-thin;
 }
