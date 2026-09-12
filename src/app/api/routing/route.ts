@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDrivingRoute, getDrivingDistances, type LatLon } from '@/lib/routing/locationiq';
+import { getRoutes, getDistances, type LatLon, type RoutingProfile } from '@/lib/routing/locationiq';
 
 function isLatLon(value: unknown): value is LatLon {
   return (
@@ -10,6 +10,10 @@ function isLatLon(value: unknown): value is LatLon {
   );
 }
 
+function resolveProfile(value: unknown): RoutingProfile {
+  return value === 'driving' ? 'driving' : 'walking';
+}
+
 export async function POST(request: Request) {
   let body: unknown;
   try {
@@ -18,10 +22,11 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Corps de requête JSON invalide.' }, { status: 400 });
   }
 
-  const { origin, destination, destinations } = body as {
+  const { origin, destination, destinations, profile } = body as {
     origin?: unknown;
     destination?: unknown;
     destinations?: unknown;
+    profile?: unknown;
   };
 
   if (!isLatLon(origin)) {
@@ -31,6 +36,8 @@ export async function POST(request: Request) {
     );
   }
 
+  const resolvedProfile = resolveProfile(profile);
+
   try {
     if (destination !== undefined) {
       if (!isLatLon(destination)) {
@@ -39,15 +46,15 @@ export async function POST(request: Request) {
           { status: 400 }
         );
       }
-      const route = await getDrivingRoute(origin, destination);
-      if (!route) {
+      const routes = await getRoutes(resolvedProfile, origin, destination);
+      if (routes.length === 0) {
         return NextResponse.json({ error: 'Aucun itinéraire trouvé.' }, { status: 404 });
       }
-      return NextResponse.json(route);
+      return NextResponse.json({ routes });
     }
 
     if (Array.isArray(destinations) && destinations.every(isLatLon)) {
-      const distances = await getDrivingDistances(origin, destinations);
+      const distances = await getDistances(resolvedProfile, origin, destinations);
       return NextResponse.json({ distances });
     }
 

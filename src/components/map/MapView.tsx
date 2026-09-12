@@ -2,7 +2,7 @@
 
 import dynamic from 'next/dynamic';
 import type { Fij, ReferencePoint } from '@/types/fij';
-import type { FlyToTarget } from './LeafletMap';
+import type { FlyToTarget, RouteOption } from './LeafletMap';
 import styles from './MapView.module.scss';
 
 // Leaflet manipule `window`/`document` dès son import : le rendu doit être
@@ -24,13 +24,12 @@ interface MapViewProps {
   onViewFullFij?: (fij: Fij) => void;
   referencePoint: ReferencePoint | null;
   nearestFijId: string | null;
-  /** Tracé réel (LocationIQ/OSRM) entre `referencePoint` et la FIJ la plus
-   * proche — liste de [lat, lon]. `null` tant qu'il n'est pas encore
-   * disponible (ou si le routage a échoué), auquel cas LeafletMap trace une
-   * ligne droite de repli. */
-  routeGeometry: [number, number][] | null;
-  /** true pendant que le tracé réel est en cours de calcul — permet
-   * d'afficher la ligne droite de repli en pointillé "provisoire". */
+  /** Trajet à pied réel (prioritaire) — `null` tant qu'il n'est pas encore
+   * disponible, auquel cas LeafletMap affiche une ligne droite de repli. */
+  walkingRoute: RouteOption | null;
+  /** Trajet en voiture réel (indicatif) — `null` s'il n'est pas disponible. */
+  drivingRoute: RouteOption | null;
+  /** true pendant que les trajets sont en cours de calcul. */
   isRoutingPath: boolean;
   flyToTarget: FlyToTarget | null;
 }

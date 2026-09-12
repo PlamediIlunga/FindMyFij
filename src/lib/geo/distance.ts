@@ -34,3 +34,16 @@ export function formatDistance(meters: number): string {
   const km = meters / 1000;
   return `${km.toFixed(1).replace('.', ',')} km`;
 }
+
+/**
+ * Formate une durée en secondes en "X min" ou "X h Y min" — utilisé pour les
+ * temps de marche (LocationIQ/OSRM), pas pour la distance à vol d'oiseau
+ * qui n'a pas de notion de durée.
+ */
+export function formatDuration(seconds: number): string {
+  const totalMinutes = Math.max(1, Math.round(seconds / 60));
+  if (totalMinutes < 60) return `${totalMinutes} min`;
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  return minutes > 0 ? `${hours} h ${minutes} min` : `${hours} h`;
+}
