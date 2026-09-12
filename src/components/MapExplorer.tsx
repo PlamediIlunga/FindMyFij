@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { Fij, FijCategory, GeocodeResult, ReferencePoint } from '@/types/fij';
 import { FIJ_CATEGORIES } from '@/types/fij';
 import { sortFijByDistance } from '@/lib/geo/distance';
@@ -35,6 +35,18 @@ export function MapExplorer({ initialFij }: MapExplorerProps) {
   const [flyToTarget, setFlyToTarget] = useState<FlyToTarget | null>(null);
   const [sheetSnapRequest, setSheetSnapRequest] = useState<SheetSnapRequest | null>(null);
 
+  // --- Routage réel (LocationIQ/OSRM) ---
+  // `drivingDistances` : distances routières (mètres) par id de FIJ, calculées
+  // via /api/routing (matrix). Tant que l'appel n'a pas répondu (ou échoue),
+  // on retombe sur la distance à vol d'oiseau pour ne jamais bloquer l'UI.
+  const [drivingDistances, setDrivingDistances] = useState<Map<string, number> | null>(null);
+  // `routeGeometry` : tracé réel (liste de [lat, lon]) entre le point de
+  // référence et la FIJ la plus proche, à afficher à la place d'une ligne
+  // droite dans LeafletMap.
+  const [routeGeometry, setRouteGeometry] = useState<[number, number][] | null>(null);
+  const [isRoutingDistances, setIsRoutingDistances] = useState(false);
+  const [isRoutingPath, setIsRoutingPath] = useState(false);
+
   const cities = useMemo(
     () => Array.from(new Set(allFij.map((fij) => fij.city))).sort((a, b) => a.localeCompare(b)),
     [allFij]
@@ -50,10 +62,120 @@ export function MapExplorer({ initialFij }: MapExplorerProps) {
     [allFij, activeCategories, activeCity]
   );
 
-  const nearbyFij = useMemo(
+  // Tri à vol d'oiseau : calcul instantané, utilisé tel quel tant que les
+  // distances routières réelles n'ont pas encore répondu, et comme repli si
+  // l'appel échoue (clé manquante, service indisponible, etc.).
+  const haversineNearbyFij = useMemo(
     () => (referencePoint ? sortFijByDistance(filteredFij, referencePoint) : []),
     [filteredFij, referencePoint]
   );
+
+  // Récupère les distances routières réelles pour toutes les FIJ filtrées
+  // dès qu'un point de référence existe (adresse recherchée ou position GPS).
+  useEffect(() => {
+    if (!referencePoint || filteredFij.length === 0) {
+      setDrivingDistances(null);
+      return;
+    }
+
+    let cancelled = false;
+    setIsRoutingDistances(true);
+
+    (async () => {
+      try {
+        const response = await fetch('/api/routing', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            origin: { latitude: referencePoint.latitude, longitude: referencePoint.longitude },
+            destinations: filteredFij.map((fij) => ({
+              latitude: fij.latitude,
+              longitude: fij.longitude,
+            })),
+          }),
+        });
+        if (!response.ok) {
+          if (!cancelled) setDrivingDistances(null);
+          return;
+        }
+        const data = (await response.json()) as { distances?: (number | null)[] };
+        if (cancelled) return;
+
+        const next = new Map<string, number>();
+        filteredFij.forEach((fij, index) => {
+          const distance = data.distances?.[index];
+          if (typeof distance === 'number') next.set(fij.id, distance);
+        });
+        setDrivingDistances(next.size > 0 ? next : null);
+      } catch {
+        if (!cancelled) setDrivingDistances(null);
+      } finally {
+        if (!cancelled) setIsRoutingDistances(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [referencePoint, filteredFij]);
+
+  // Liste "à proximité" finale : distances routières réelles quand elles
+  // sont disponibles, sinon repli sur le tri à vol d'oiseau.
+  const nearbyFij = useMemo(() => {
+    if (!referencePoint) return [];
+    if (!drivingDistances) return haversineNearbyFij;
+
+    return haversineNearbyFij
+      .map((fij) => ({
+        ...fij,
+        distanceMeters: drivingDistances.get(fij.id) ?? fij.distanceMeters,
+      }))
+      .sort((a, b) => a.distanceMeters - b.distanceMeters);
+  }, [haversineNearbyFij, referencePoint, drivingDistances]);
+
+  const nearestFij = nearbyFij[0] ?? null;
+
+  // Récupère le tracé réel (suit les routes) entre le point de référence et
+  // la FIJ la plus proche, pour remplacer la ligne droite dans LeafletMap.
+  useEffect(() => {
+    if (!referencePoint || !nearestFij) {
+      setRouteGeometry(null);
+      return;
+    }
+
+    let cancelled = false;
+    setIsRoutingPath(true);
+
+    (async () => {
+      try {
+        const response = await fetch('/api/routing', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            origin: { latitude: referencePoint.latitude, longitude: referencePoint.longitude },
+            destination: { latitude: nearestFij.latitude, longitude: nearestFij.longitude },
+          }),
+        });
+        if (!response.ok) {
+          if (!cancelled) setRouteGeometry(null);
+          return;
+        }
+        const data = (await response.json()) as { geometry?: [number, number][] };
+        if (!cancelled) setRouteGeometry(data.geometry ?? null);
+      } catch {
+        if (!cancelled) setRouteGeometry(null);
+      } finally {
+        if (!cancelled) setIsRoutingPath(false);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+    // On ne redéclenche que si le point de référence ou la FIJ la plus
+    // proche change réellement — pas à chaque recalcul de `nearbyFij`.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [referencePoint, nearestFij?.id]);
 
   const selectedFij = useMemo(
     () => allFij.find((fij) => fij.id === selectedFijId) ?? null,
@@ -79,10 +201,6 @@ export function MapExplorer({ initialFij }: MapExplorerProps) {
   }
 
   function handleSelectFij(fij: Fij) {
-    // Si la FIJ trouvée (recherche, liste...) appartient à une catégorie
-    // actuellement masquée par les filtres, on la réactive : sans ça, la
-    // carte se déplace bien vers le bon point mais aucun marqueur n'y est
-    // visible, ce qui donne l'impression que « rien ne se passe ».
     setActiveCategories((previous) => {
       if (previous.has(fij.category)) return previous;
       const next = new Set(previous);
@@ -92,8 +210,6 @@ export function MapExplorer({ initialFij }: MapExplorerProps) {
     setActiveCity((previous) => (previous === 'all' || previous === fij.city ? previous : 'all'));
     setSelectedFijId(fij.id);
     flyTo(fij.latitude, fij.longitude);
-    // Sur mobile, on replie la feuille pour laisser voir le marqueur choisi ;
-    // la mini-fiche prend le relais en tête de feuille.
     requestSheetSnap('peek');
   }
 
@@ -134,8 +250,6 @@ export function MapExplorer({ initialFij }: MapExplorerProps) {
       source: 'address',
     });
     flyTo(result.latitude, result.longitude, 13);
-    // Une recherche d'adresse sert à comparer les FIJ proches : sur mobile,
-    // ouvrir directement la feuille à mi-hauteur rend le résultat visible.
     requestSheetSnap('half');
   }
 
@@ -149,7 +263,11 @@ export function MapExplorer({ initialFij }: MapExplorerProps) {
     flyTo(position.latitude, position.longitude, 13);
   }
 
-  const listTitle = referencePoint ? 'FIJ à proximité' : 'Toutes les FIJ';
+  const listTitle = referencePoint
+    ? isRoutingDistances && !drivingDistances
+      ? 'FIJ à proximité (distances estimées…)'
+      : 'FIJ à proximité'
+    : 'Toutes les FIJ';
   const listData = referencePoint ? nearbyFij : filteredFij;
 
   return (
@@ -218,7 +336,9 @@ export function MapExplorer({ initialFij }: MapExplorerProps) {
             onSelectFij={handleSelectFij}
             onViewFullFij={handleViewFullFij}
             referencePoint={referencePoint}
-            nearestFijId={nearbyFij[0]?.id ?? null}
+            nearestFijId={nearestFij?.id ?? null}
+            routeGeometry={routeGeometry}
+            isRoutingPath={isRoutingPath}
             flyToTarget={flyToTarget}
           />
         </div>

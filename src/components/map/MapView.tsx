@@ -24,6 +24,14 @@ interface MapViewProps {
   onViewFullFij?: (fij: Fij) => void;
   referencePoint: ReferencePoint | null;
   nearestFijId: string | null;
+  /** Tracé réel (LocationIQ/OSRM) entre `referencePoint` et la FIJ la plus
+   * proche — liste de [lat, lon]. `null` tant qu'il n'est pas encore
+   * disponible (ou si le routage a échoué), auquel cas LeafletMap trace une
+   * ligne droite de repli. */
+  routeGeometry: [number, number][] | null;
+  /** true pendant que le tracé réel est en cours de calcul — permet
+   * d'afficher la ligne droite de repli en pointillé "provisoire". */
+  isRoutingPath: boolean;
   flyToTarget: FlyToTarget | null;
 }
 

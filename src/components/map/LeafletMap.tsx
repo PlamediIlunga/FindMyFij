@@ -23,6 +23,8 @@ interface LeafletMapProps {
   onViewFullFij?: (fij: Fij) => void;
   referencePoint: ReferencePoint | null;
   nearestFijId: string | null;
+  routeGeometry: [number, number][] | null;
+  isRoutingPath: boolean;
   flyToTarget: FlyToTarget | null;
 }
 
@@ -73,6 +75,8 @@ export default function LeafletMap({
   onViewFullFij,
   referencePoint,
   nearestFijId,
+  routeGeometry,
+  isRoutingPath,
   flyToTarget,
 }: LeafletMapProps) {
   const markerRefs = useRef<Record<string, L.Marker | null>>({});
@@ -139,9 +143,32 @@ export default function LeafletMap({
       {referencePoint && nearestFijId && (() => {
         const nearest = fijList.find((fij) => fij.id === nearestFijId);
         if (!nearest) return null;
-        // Ligne droite intentionnelle : elle représente la distance Haversine affichée,
-        // pas un itinéraire routier (qui nécessiterait un service de routing dédié).
-        return <Polyline positions={[[referencePoint.latitude, referencePoint.longitude], [nearest.latitude, nearest.longitude]]} pathOptions={{ color: '#FF6A2C', weight: 4, opacity: 0.85, dashArray: '8 8' }} />;
+
+        const straightLine: [number, number][] = [
+          [referencePoint.latitude, referencePoint.longitude],
+          [nearest.latitude, nearest.longitude],
+        ];
+
+        // Tracé réel (suit les routes) une fois calculé par /api/routing ;
+        // ligne droite en repli tant qu'il n'est pas prêt ou si le routage a
+        // échoué (clé absente, service indisponible...). Le pointillé signale
+        // dans les deux cas qu'il s'agit d'une estimation, pas d'un trajet
+        // routier confirmé.
+        const positions = routeGeometry ?? straightLine;
+        const isApproximate = !routeGeometry;
+
+        return (
+          <Polyline
+            key={isApproximate ? 'approx' : 'real'}
+            positions={positions}
+            pathOptions={{
+              color: '#FF6A2C',
+              weight: 4,
+              opacity: isRoutingPath ? 0.55 : 0.85,
+              dashArray: isApproximate ? '8 8' : undefined,
+            }}
+          />
+        );
       })()}
     </MapContainer>
   );
