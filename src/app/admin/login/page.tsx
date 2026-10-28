@@ -29,7 +29,7 @@ export default function AdminLoginPage({ searchParams }: { searchParams: { redir
           <p className={styles.subtitle}>Connectez-vous pour gérer les FIJ.</p>
           <LoginForm redirectTo={searchParams.redirectTo} />
           <p className={styles.hint}>
-            Aucun compte ? Créez-en un dans Supabase (Authentication → Users).
+            Besoin d’un accès ? Contactez votre responsable FIJ.
           </p>
           <Link href="/" className={styles.backLink}>
             ← Retour à la carte

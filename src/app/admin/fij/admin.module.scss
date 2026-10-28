@@ -177,3 +177,16 @@
     display: flex;
   }
 }
+.content { max-width: 1440px; margin: 0 auto; }
+.title { font-weight: 800; }
+.pageIntro { margin: 8px 0 28px; }
+.eyebrow { margin: 0 0 10px; color: v.$color-orange-600; font-size: 11px; font-weight: 800; letter-spacing: .16em; }
+.pageIntro h1 { margin: 0 0 8px; color: var(--color-text-strong); font-size: clamp(26px, 3vw, 38px); line-height: 1.15; }
+.pageIntro > p:last-child { margin: 0; color: var(--color-text-muted); line-height: 1.6; font-size: 14px; }
+.logoMark { width: 42px; height: 42px; border-radius: 13px; font-weight: 900; }
+.subLinks { flex-wrap: wrap; margin-top: 6px; }
+.subLink { border: 0; background: transparent; padding: 3px 0; margin-right: 8px; }
+.addButton { border-radius: 12px; min-height: 46px; box-shadow: 0 5px 16px rgba(255,106,44,.18); }
+.adminFooter { max-width: 1440px; margin: 24px auto 0; }
+.adminFooter a { display: inline-flex; width: 44px; height: 44px; align-items: center; }
+@include m.mobile { .page { padding-bottom: 88px; } .brand { flex: 1; } .brand > div { min-width: 0; } .topbar { gap: 8px; } .title { font-size: 16px; } }

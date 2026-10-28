@@ -94,6 +94,15 @@ button {
   font-family: inherit;
 }
 
+input, select, textarea { font-family: inherit; }
+h1, h2, h3 { font-weight: 750; letter-spacing: -0.035em; }
+button, a, input, select { -webkit-tap-highlight-color: transparent; }
+button:disabled { cursor: not-allowed; }
+[data-theme='dark'] { color-scheme: dark; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+}
+
 a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible {
   outline: 3px solid rgba(255, 106, 44, .55);
   outline-offset: 2px;

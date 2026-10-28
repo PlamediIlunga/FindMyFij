@@ -25,5 +25,7 @@
   flex-direction: column;
   padding: v.$space-4 v.$space-5 v.$space-5;
   overflow-y: auto;
+  overscroll-behavior-y: contain;
+  > * { flex-shrink: 0; }
   @include m.scrollbar-thin;
 }

@@ -79,3 +79,13 @@
   color: var(--color-text-muted);
   line-height: 1.5;
 }
+.intro { max-width: 980px; margin: 8px auto 28px; }
+.intro h1 { margin: 0 0 10px; font-size: clamp(26px, 3vw, 36px); color: var(--color-text-strong); }
+.intro > p:last-child { color: var(--color-text-muted); font-size: 14px; line-height: 1.6; }
+.tabs { width: 100%; justify-content: flex-start; border-radius: 14px; padding: 6px; margin-bottom: 24px; }
+.tab, .tabActive { border-radius: 10px; min-height: 44px; }
+.formCard { box-shadow: var(--shadow-md); }
+.tips { border-top: 3px solid v.$color-orange-500; top: 120px; }
+.tipsTitle { font-weight: 750; }
+.tipsList { gap: 20px; line-height: 1.7; }
+.tipsList li::marker { color: v.$color-orange-500; font-weight: 800; }

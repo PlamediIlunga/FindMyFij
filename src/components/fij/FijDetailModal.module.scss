@@ -94,3 +94,5 @@
     transform: translateY(0);
   }
 }
+.modal { border: 1px solid var(--color-border); padding-top: 28px; }
+.closeButton { width: 40px; height: 40px; }

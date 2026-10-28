@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   gap: v.$space-5;
-  max-width: 560px;
+  width: 100%;
 }
 
 .row {
@@ -167,3 +167,11 @@
 .statusOption:hover, .statusOption:focus-visible { border-color: v.$color-orange-500; color: var(--color-text-strong); }
 .statusActive { background: v.$color-orange-500; border-color: v.$color-orange-500; color: v.$color-white; }
 .mapLoading { margin: 0; padding: v.$space-4; color: var(--color-text-muted); font-size: v.$font-size-sm; background: var(--color-surface-muted); border-radius: v.$radius-sm; }
+.sectionHeading { display: flex; align-items: center; gap: 12px; margin-top: 12px; padding-top: 24px; border-top: 1px solid var(--color-border); }
+.sectionHeading:first-child { border: 0; margin: 0; padding-top: 0; }
+.sectionHeading > span { display: grid; place-items: center; width: 36px; height: 36px; flex-shrink: 0; border-radius: 10px; background: var(--color-selected); color: v.$color-orange-600; font-size: 12px; font-weight: 800; }
+.sectionHeading h2 { margin: 0; font-size: 18px; color: var(--color-text-strong); }
+.sectionHeading p { margin: 4px 0 0; font-size: 12px; color: var(--color-text-muted); line-height: 1.5; }
+.submitButton { border-radius: 12px; box-shadow: 0 4px 14px rgba(255,106,44,.18); }
+.geocodeRow { flex-wrap: wrap; }
+.input, .select { width: 100%; }

@@ -2,10 +2,10 @@
 // typographie condensée et impactante — inspirée des visuels FIJ fournis.
 
 // --- Couleurs de marque ---
-$color-navy-950: #0c0c2e;
-$color-navy-900: #12123a;
-$color-navy-800: #1b1b4d;
-$color-navy-700: #26266a;
+$color-navy-950: #101827;
+$color-navy-900: #18243b;
+$color-navy-800: #22314b;
+$color-navy-700: #344662;
 $color-orange-500: #ff6a2c;
 $color-orange-600: #e8551a;
 $color-orange-100: #ffe4d6;
@@ -17,12 +17,12 @@ $color-category-jeunes-ados: #8c8fa3;
 
 // --- Neutres ---
 $color-white: #ffffff;
-$color-gray-50: #f7f7fb;
-$color-gray-100: #eef0f6;
-$color-gray-200: #dfe2ec;
-$color-gray-300: #c3c9dc;
-$color-gray-400: #9ea3b8;
-$color-gray-600: #656b85;
+$color-gray-50: #f5f7fa;
+$color-gray-100: #edf1f5;
+$color-gray-200: #e2e7ee;
+$color-gray-300: #c5cedb;
+$color-gray-400: #a7b5c9;
+$color-gray-600: #58677e;
 $color-gray-800: #2c2e42;
 $color-black: #101024;
 
@@ -32,15 +32,15 @@ $color-success: #2fa86b;
 $color-warning: #f2a93b;
 
 // --- Mode sombre ---
-$color-dark-bg: #0c0c2e;
-$color-dark-surface: #15153f;
-$color-dark-border: #262657;
-$color-dark-text: #eef0f6;
+$color-dark-bg: #101827;
+$color-dark-surface: #19253a;
+$color-dark-border: #2d3b52;
+$color-dark-text: #f0f4fa;
 
 // --- Typographie ---
 // Une seule famille display condensée/bold pour les titres (écho aux
 // affiches FIJ) + une famille texte lisible pour le contenu.
-$font-display: 'Archivo Black', 'Arial Black', sans-serif;
+$font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 $font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 
 $font-size-xs: 0.75rem;

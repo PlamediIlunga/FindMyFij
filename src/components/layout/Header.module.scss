@@ -42,6 +42,7 @@
 }
 
 .title {
+  font-weight: 800;
   font-family: v.$font-display;
   font-size: v.$font-size-lg;
   color: var(--color-text-strong);
@@ -54,3 +55,7 @@
   color: var(--color-text-muted);
   margin: 0;
 }
+
+.header { padding: 16px 28px; border-bottom-color: var(--color-border); }
+.logo { width: 42px; height: 42px; border-radius: 13px; font-weight: 900; box-shadow: 0 5px 14px rgba(255,106,44,.22); }
+.subtitle { margin-top: 3px; }

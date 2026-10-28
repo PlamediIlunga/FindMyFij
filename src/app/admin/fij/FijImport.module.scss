@@ -12,3 +12,20 @@
 .preview { max-height: 260px; overflow: auto; border: 1px solid var(--color-border); border-radius: v.$radius-sm; }
 .preview table { border-collapse: collapse; width: 100%; font-size: v.$font-size-sm; }.preview th,.preview td { padding: v.$space-2; text-align: left; border-bottom: 1px solid var(--color-border); }.invalid { color: v.$color-danger; }
 .importButton { @include m.button-reset; margin-top: v.$space-3; padding: v.$space-3 v.$space-5; border-radius: v.$radius-pill; color: v.$color-white; background: v.$color-orange-500; font-weight: 800; }.importButton:hover:not(:disabled) { background: v.$color-orange-600; }.importButton:disabled { opacity: .6; cursor: progress; }
+.importer { max-width: 980px; margin: 0 auto; padding: 32px; border-radius: 20px; }
+.heading { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+.fileIcon { width: 48px; height: 48px; display: grid; place-items: center; flex-shrink: 0; background: var(--color-selected); color: v.$color-orange-600; font-size: 28px; border-radius: 14px; }
+.importer h2 { font-weight: 750; font-size: 22px; }
+.importer p { line-height: 1.7; }
+.instructions { padding: 20px; border: 1px solid var(--color-border); border-radius: 12px; background: var(--color-surface-muted); margin-bottom: 24px; }
+.instructions strong { color: var(--color-text-strong); font-size: 14px; }
+.instructions p:last-child { margin-bottom: 0; }
+.fileRow { padding: 24px; border: 1px dashed var(--color-border-strong); border-radius: 14px; gap: 16px; }
+.fileButton { min-height: 44px; display: inline-flex; align-items: center; }
+.fileInput:focus-visible + .fileButton { outline: 3px solid v.$color-orange-500; outline-offset: 3px; }
+.fileInput:disabled + .fileButton { opacity: .5; cursor: not-allowed; }
+.error { color: v.$color-danger !important; padding: 12px; background: rgba(232,57,74,.08); border-radius: 10px; }
+.preview th { position: sticky; top: 0; background: var(--color-surface-muted); }
+.preview th, .preview td { padding: 14px; }
+.importButton { min-height: 48px; border-radius: 12px; }
+@include m.mobile { .importer { padding: 20px 16px; } .heading { align-items: flex-start; } .importer h2 { font-size: 20px; } .fileRow { padding: 16px; } .importButton { width: 100%; } }

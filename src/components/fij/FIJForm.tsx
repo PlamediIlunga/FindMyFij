@@ -157,6 +157,7 @@ export function FIJForm({ initialData, submitLabel = 'Enregistrer', onSubmit }: 
 
   return (
     <form className={styles.form} onSubmit={handleSubmit}>
+      <div className={styles.sectionHeading}><span>01</span><div><h2>La FIJ</h2><p>Son nom et le public qu’elle accueille.</p></div></div>
       <div className={styles.field}>
         <label className={styles.label} htmlFor="name">Nom de la FIJ</label>
         <input
@@ -183,6 +184,7 @@ export function FIJForm({ initialData, submitLabel = 'Enregistrer', onSubmit }: 
         </select>
       </div>
 
+      <div className={styles.sectionHeading}><span>02</span><div><h2>Adresse et contact</h2><p>Les informations utiles pour vous retrouver.</p></div></div>
       <div className={styles.field}>
         <label className={styles.label} htmlFor="address">Adresse</label>
         <input
@@ -275,6 +277,7 @@ export function FIJForm({ initialData, submitLabel = 'Enregistrer', onSubmit }: 
         </div>
       )}
 
+      <div className={styles.sectionHeading}><span>03</span><div><h2>Position sur la carte</h2><p>Localisez l’adresse, puis vérifiez le marqueur.</p></div></div>
       <div className={styles.geocodeRow}>
         <button
           type="button"
@@ -282,7 +285,7 @@ export function FIJForm({ initialData, submitLabel = 'Enregistrer', onSubmit }: 
           onClick={handleGeocode}
           disabled={geocodeStatus === 'loading'}
         >
-          {geocodeStatus === 'loading' ? 'Géocodage…' : "📍 Géocoder l'adresse"}
+          {geocodeStatus === 'loading' ? 'Géocodage…' : "Localiser l'adresse"}
         </button>
         <span
           className={`${styles.geocodeStatus} ${

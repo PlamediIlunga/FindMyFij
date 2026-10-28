@@ -81,3 +81,12 @@ La séparation clé : **aucun composant n'appelle Supabase directement**. Tout p
 
 - Le géocodage n'est jamais lancé automatiquement en masse : uniquement à la demande (recherche d'adresse ou bouton "Géocoder" dans le formulaire).
 - Les catégories, couleurs et données de test sont centralisées dans `src/types/fij.ts` et `src/data/mockFij.ts` si vous voulez les adapter.
+
+## Vérifier le design et l’import Excel
+
+- `npm test` : 11 tests sur de vrais classeurs XLSX générés en mémoire, validation des lignes, géocodage simulé, échec de sauvegarde, reprise et protection contre la réimportation des lignes déjà réussies.
+- `npm run dev:demo` : aperçu sur http://127.0.0.1:3100 avec les FIJ fictives du projet, sans connexion à Supabase.
+- Dans un second terminal, `npm run test:ui` : Chrome installé localement ; contrôle la carte, le tableau de bord, l’ajout, la modification et la connexion en clair/sombre à 390, 820 et 1440 px. Vérifie le défilement, les filtres, le copyright et le chargement d’un fichier Excel. Les captures sont enregistrées dans le répertoire temporaire du système.
+- `npm run build` : compilation de production et vérification TypeScript.
+
+Les tests n’insèrent rien dans la base réelle. La sauvegarde est simulée dans les tests unitaires ; le test navigateur simule un service de géocodage indisponible. L’ajout de comptes et la réinitialisation des mots de passe nécessitent une session Supabase et ne sont pas inclus dans la matrice navigateur en mode démo.

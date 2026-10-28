@@ -7,11 +7,12 @@
   align-items: center;
   gap: v.$space-3;
   width: 100%;
-  padding: v.$space-3 v.$space-2;
+  padding: 16px 12px;
   border-radius: v.$radius-sm;
   text-align: left;
   transition: background v.$transition-fast, border-color v.$transition-fast;
-  border: 1px solid transparent;
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
   border-bottom-color: var(--color-border);
 
   &:hover {
@@ -39,13 +40,14 @@
 }
 
 .name {
-  font-weight: 600;
+  font-weight: 700;
   font-size: v.$font-size-sm;
   color: var(--color-text-strong);
   @include m.truncate;
 }
 
 .city {
+  margin-top: 5px;
   font-size: v.$font-size-xs;
   color: var(--color-text-muted);
   @include m.truncate;

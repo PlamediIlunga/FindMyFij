@@ -35,6 +35,7 @@ export default async function AdminFijPage() {
       </header>
 
       <main className={styles.content}>
+        <div className={styles.pageIntro}><p className={styles.eyebrow}>ESPACE ADMINISTRATION</p><h1>Faites grandir le réseau.</h1><p>Retrouvez vos FIJ et gardez les informations de la carte à jour.</p></div>
         <FijAdminDashboard fijList={fijList} />
       </main>
 

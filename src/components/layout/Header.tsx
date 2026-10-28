@@ -2,7 +2,6 @@
 
 import styles from './Header.module.scss';
 import { ThemeToggle } from '@/components/theme/ThemeToggle';
-import { AdminEntryButton } from './AdminEntryButton';
 
 export function Header() {
   return (
@@ -16,7 +15,6 @@ export function Header() {
       </div>
       <div className={styles.right_header_icons}>
         <ThemeToggle />
-        <AdminEntryButton variant="inline" />
       </div>
     </header>
   );

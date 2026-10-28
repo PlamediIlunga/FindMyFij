@@ -16,7 +16,7 @@
   will-change: transform;
   transition: transform v.$transition-sheet;
   padding-bottom: var(--safe-bottom);
-  touch-action: none;
+  touch-action: pan-y;
 
   &.dragging {
     transition: none;
@@ -76,6 +76,10 @@
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
   padding: 0 v.$space-4 calc(v.$space-4 + var(--safe-bottom));
   @include m.scrollbar-thin;
 }
+.title { font-weight: 750; }
+.count { background: var(--color-selected); color: var(--color-text-strong); font-weight: 750; padding: 5px 10px; }

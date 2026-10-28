@@ -2,7 +2,7 @@
 
 import { useState, useTransition } from 'react';
 import { deleteFijAction } from '@/app/admin/fij/actions';
-import styles from './admin.module.scss';
+import styles from './FijAdminDashboard.module.scss';
 
 export function FijDeleteButton({ id, name }: { id: string; name: string }) {
   const [isPending, startTransition] = useTransition();

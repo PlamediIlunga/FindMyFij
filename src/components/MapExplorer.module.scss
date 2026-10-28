@@ -15,6 +15,11 @@
   display: flex;
 }
 
+.intro { padding: 8px 0 20px; }
+.eyebrow { font-size: 10px; font-weight: 800; letter-spacing: .16em; color: #d95019; }
+.intro h1 { margin: 8px 0 6px; font-size: 28px; line-height: 1.15; color: var(--color-text-strong); }
+.intro p { margin: 0; font-size: 13px; color: var(--color-text-muted); }
+
 .mapArea {
   flex: 1;
   position: relative;

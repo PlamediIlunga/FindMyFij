@@ -308,6 +308,7 @@ export function MapExplorer({ initialFij }: MapExplorerProps) {
       <div className={styles.body}>
         <div className={styles.desktopOnly} style={{ display: 'flex' }}>
           <Sidebar>
+            <div className={styles.intro}><span className={styles.eyebrow}>UN LIEU POUR GRANDIR</span><h1>Trouvez votre FIJ.</h1><p>Une famille près de chez vous.</p></div>
             <SearchBar
               fijList={allFij}
               onSelectFij={handleSelectFij}
@@ -328,6 +329,7 @@ export function MapExplorer({ initialFij }: MapExplorerProps) {
               selectedFijId={selectedFijId}
               onSelectFij={handleSelectFij}
             />
+            <AdminEntryButton />
           </Sidebar>
         </div>
 
@@ -342,7 +344,6 @@ export function MapExplorer({ initialFij }: MapExplorerProps) {
                 />
               </div>
               <ThemeToggle />
-              <AdminEntryButton />
             </div>
             <CategoryFilter
               variant="chips"
@@ -396,6 +397,7 @@ export function MapExplorer({ initialFij }: MapExplorerProps) {
             selectedFijId={selectedFijId}
             onSelectFij={handleSelectFij}
           />
+          <AdminEntryButton />
         </MobileBottomSheet>
       </div>
 

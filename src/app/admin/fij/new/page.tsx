@@ -43,6 +43,7 @@ export default function NewFijPage() {
       </header>
 
       <main className={styles.content}>
+        <div className={formStyles.intro}><p className={styles.eyebrow}>DÉVELOPPER LE RÉSEAU</p><h1>Un nouveau lieu de rencontre.</h1><p>Ajoutez une FIJ à la carte ou importez plusieurs adresses depuis Excel.</p></div>
         <div className={formStyles.tabs} role="tablist" aria-label="Mode d’ajout">
           <button type="button" role="tab" aria-selected={mode === 'form'} className={mode === 'form' ? formStyles.tabActive : formStyles.tab} onClick={() => setMode('form')}>Ajouter une FIJ</button>
           <button type="button" role="tab" aria-selected={mode === 'import'} className={mode === 'import' ? formStyles.tabActive : formStyles.tab} onClick={() => setMode('import')}>Importer un fichier Excel</button>
@@ -55,8 +56,8 @@ export default function NewFijPage() {
           <aside className={formStyles.tips}>
             <p className={formStyles.tipsTitle}>Avant de créer</p>
             <ol className={formStyles.tipsList}>
-              <li>Choisissez la catégorie réelle (Jeunes ou Jeunes Ados) — « Global » n&apos;existe pas pour une FIJ, c&apos;est juste un filtre.</li>
-              <li>Renseignez l&apos;adresse complète puis cliquez sur « Géocoder l&apos;adresse » pour positionner le marqueur.</li>
+              <li>Identifiez la FIJ et choisissez son public : Jeunes ou Jeunes Ados.</li>
+              <li>Renseignez l&apos;adresse complète puis localisez-la sur la carte.</li>
               <li>Vérifiez la position obtenue avant de créer — vous pourrez toujours l&apos;ajuster plus tard depuis la liste.</li>
             </ol>
           </aside>

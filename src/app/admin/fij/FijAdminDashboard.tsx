@@ -304,7 +304,7 @@ export function FijAdminDashboard({ fijList }: FijAdminDashboardProps) {
               </div>
             </header>
 
-            <div className={styles.tableScroll}>
+            <div className={styles.tableScroll} tabIndex={0} role="region" aria-label={`Liste des FIJ — ${group.label}`}>
             <table className={styles.table}>
               <thead>
                 <tr>
